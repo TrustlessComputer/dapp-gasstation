@@ -90,19 +90,19 @@ const SubmitForm = (props: SubmitFormProps) => {
 
           <Input
             title={`Amount ${
-              values.amount &&
-              !errors.amount &&
-              `( ~${
-                payType === PayType.eth
-                  ? `${ceilPrecised(
-                      Number(values.amount) * TC_ETH_PRICE,
-                      4
-                    )} ETH`
-                  : `${ceilPrecised(
-                      Number(values.amount) * TC_BTC_PRICE,
-                      5
-                    )} BTC`
-              } )`
+              values.amount && !errors.amount
+                ? `( ~${
+                    payType === PayType.eth
+                      ? `${ceilPrecised(
+                          Number(values.amount) * TC_ETH_PRICE,
+                          4
+                        )} ETH`
+                      : `${ceilPrecised(
+                          Number(values.amount) * TC_BTC_PRICE,
+                          5
+                        )} BTC`
+                  } )`
+                : ""
             }`}
             id="amount"
             type="number"
