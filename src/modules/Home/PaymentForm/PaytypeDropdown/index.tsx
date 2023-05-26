@@ -1,6 +1,5 @@
 import IconSVG from "@/components/IconSVG";
 import Dropdown, { IDropdownRef } from "@/components/Popover";
-import { Row } from "@/components/Row";
 import Text from "@/components/Text";
 import { CDN_URL_ICONS } from "@/configs";
 import React from "react";
@@ -41,7 +40,7 @@ const PaytypeDropdown = React.memo((props: Props) => {
         color="text-secondary"
         className="mb-8"
       >
-        Pay type
+        Payment currency
       </Text>
       <Dropdown
         element={

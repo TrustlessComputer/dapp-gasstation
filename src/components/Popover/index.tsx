@@ -4,7 +4,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { PopoverWrapper, OverlayWrapper, Wrapper } from "./styled";
-import { CDN_URL_ICONS } from "@/configs";
+import { CDN_URL, CDN_URL_ICONS } from "@/configs";
 import IconSVG from "@/components/IconSVG";
 
 interface IProps extends PropsWithChildren {
@@ -72,15 +72,16 @@ const Dropdown = React.forwardRef(
             <div ref={ref}>{unwrapElement}</div>
           ) : (
             <Wrapper ref={ref} show={show}>
-              <div className="element">
-                {icon && icon}
-                {element && element}
+              <div className="element-container">
+                <div className="element">
+                  {icon && icon}
+                  {element && element}
+                </div>
                 <IconSVG
-                  src={`${CDN_URL_ICONS}/ic-arrow-down-${
-                    !show ? "dark" : "light"
-                  }.svg`}
+                  src={`${CDN_URL}/images/chevron-down.svg`}
                   color="white"
-                  maxWidth="14"
+                  maxWidth="18"
+                  className={`fa-arrow-${!show ? "down" : "open"}`}
                 />
               </div>
             </Wrapper>

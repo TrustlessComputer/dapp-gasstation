@@ -1,4 +1,4 @@
-# Trustless Gas Station
+# TC Gas Station
 
 ## Requirements
 

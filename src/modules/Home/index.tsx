@@ -86,7 +86,7 @@ const Home = () => {
   return (
     <MDContainer>
       <Styled>
-        <Text size="h2">Buying TC</Text>
+        <Text size="h2">Get TC</Text>
         <Container>
           {paymentInfo ? (
             <PaymentForm

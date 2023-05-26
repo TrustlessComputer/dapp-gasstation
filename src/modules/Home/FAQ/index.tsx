@@ -5,24 +5,24 @@ import { Container } from "./FAQ.styled";
 
 const faqs = [
   {
-    title: "Is there a limit to the number of $TC that a wallet can purchase?",
-    desc: "The maximum amount allowed is 100 $TC per wallet.",
+    title: "Is there a limit to the number of TC that a wallet can purchase?",
+    desc: "The maximum amount allowed is 100 TC per wallet.",
   },
   {
-    title: "What currencies can be used to buy $TC?",
+    title: "What currencies can be used to buy TC?",
     desc: "BTC and ETH.",
   },
   {
-    title: "What is the price of $TC?",
-    desc: "The $TC price is set at 1 $TC = 0.0069 ETH.",
+    title: "What is the price of TC?",
+    desc: "The $TC price is set at 1 TC = 0.0069 ETH.",
   },
   {
     title: "How much TC is required?",
     desc: "0.1 TC should be sufficient for about 10 swaps. The gas of creating Artifacts or deploying smart contracts is determined by the size of your file.",
   },
   {
-    title: "Where can I trade $TC?",
-    desc: "$TC cannot be sold at the moment.",
+    title: "Where can I trade TC?",
+    desc: "TC cannot be sold at the moment.",
   },
 ];
 
