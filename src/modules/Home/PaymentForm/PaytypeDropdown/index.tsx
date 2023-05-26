@@ -1,5 +1,6 @@
 import IconSVG from "@/components/IconSVG";
 import Dropdown, { IDropdownRef } from "@/components/Popover";
+import { Row } from "@/components/Row";
 import Text from "@/components/Text";
 import { CDN_URL_ICONS } from "@/configs";
 import React from "react";
@@ -12,11 +13,11 @@ export enum PayType {
 
 export const ListPayType = [
   {
-    icon: "eth.svg",
+    icon: "ic-eth.svg",
     value: PayType.eth,
   },
   {
-    icon: "btc.svg",
+    icon: "ic-btc.svg",
     value: PayType.btc,
   },
 ];
@@ -49,7 +50,12 @@ const PaytypeDropdown = React.memo((props: Props) => {
           </Text>
         }
         type="click"
-        icon={<IconSVG src={`${CDN_URL_ICONS}/`} maxWidth="32" />}
+        icon={
+          <IconSVG
+            src={`${CDN_URL_ICONS}/ic-${props.payType}.svg`}
+            maxWidth="28"
+          />
+        }
         ref={dropdownRef}
       >
         <DropdownList>
@@ -62,7 +68,7 @@ const PaytypeDropdown = React.memo((props: Props) => {
               }}
             >
               <div className="item">
-                <IconSVG src={`${CDN_URL_ICONS}/${item.icon}`} maxWidth="32" />
+                <IconSVG src={`${CDN_URL_ICONS}/${item.icon}`} maxWidth="28" />
                 <div>
                   <Text color="text-primary" fontWeight="medium" size="note">
                     {item.value.toUpperCase()}

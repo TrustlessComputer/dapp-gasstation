@@ -10,7 +10,7 @@ export const MOCKUP_PASSWORD: string = ENVS.VITE_MOCKUP_PASSWORD || "";
 export const MOCKUP_MNEMONIC: string = ENVS.VITE_MOCKUP_MNEMONIC || "";
 export const isKeepSign: boolean = ENVS.VITE_KEEP_SIGNIN === "true";
 
-export const CDN_URL_ICONS: string = CDN_URL + "/gastion-icons";
+export const CDN_URL_ICONS: string = CDN_URL + "/gasstion-icons";
 
 // Contract configs
 export const ARTIFACT_CONTRACT: string = ENVS.VITE_ARTIFACT_CONTRACT;

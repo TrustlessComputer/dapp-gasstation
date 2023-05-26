@@ -35,9 +35,9 @@ class WError extends Error {
   }
 }
 
-export const getErrorMessage = (error: unknown) => {
+export const getErrorMessage = (error: any) => {
   let message = "Something went wrong. Please try again later.";
-  if (error instanceof Error && error.message) {
+  if (error && error.message) {
     message = error.message;
   }
   return {

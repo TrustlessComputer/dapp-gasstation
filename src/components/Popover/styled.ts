@@ -4,7 +4,7 @@ import px2rem from "@/utils/px2rem";
 
 const PopoverWrapper = styled(Popover)<{ width?: number }>`
   background-color: ${({ theme }) => theme.bg.secondary};
-  border: 1px solid ${({ theme }) => theme["border-primary"]};
+  border: 1px solid ${({ theme }) => theme["border-third"]};
   max-width: ${({ width }) => px2rem(width || 200)} !important;
   border-radius: ${px2rem(8)};
   padding: ${px2rem(12)} ${px2rem(16)};
@@ -41,7 +41,7 @@ const Wrapper = styled.div<{ show?: boolean }>`
   /* align-items: center; */
   justify-content: center;
 
-  background: ${({ theme, show }) => theme.bg.secondary};
+  background: ${({ theme }) => theme.bg.secondary};
   border: 1px solid ${({ theme }) => theme["border-third"]};
   padding: ${px2rem(0)} ${px2rem(12)};
   border-radius: ${px2rem(8)};

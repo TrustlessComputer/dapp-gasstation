@@ -24,7 +24,7 @@ const Wrapper = styled(LayoutPadding)`
   background-color: ${({ theme }) => theme.bg.secondary};
   padding-top: ${px2rem(24)};
   padding-bottom: ${px2rem(24)};
-  height: ${px2rem(110)};
+  height: ${px2rem(80)};
 
   .ic-logo {
     width: ${px2rem(60)};
@@ -53,7 +53,7 @@ const Wrapper = styled(LayoutPadding)`
       margin-right: ${px2rem(24)};
 
       a {
-        color: ${({ theme }) => theme.white} !important;
+        color: ${({ theme }) => theme["button-primary"]} !important;
       }
     }
   }

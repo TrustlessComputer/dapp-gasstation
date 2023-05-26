@@ -78,7 +78,7 @@ export const darkTheme = {
   "text-secondary": colors.dark["10"],
   "text-highlight": colors.yellow["A"],
   "text-parallel": colors.dark["100"],
-  "text-third": colors.dark["5"],
+  "text-third": colors.dark["60"],
   "text-four": colors.dark["40"],
   "text-five": colors.dark["20"],
 
@@ -94,7 +94,7 @@ export const darkTheme = {
   bg: {
     primary: colors.dark["100"],
     secondary: colors.black,
-    third: colors.dark["100"],
+    third: colors.dark["80"],
     four: colors.primary["f2"],
   },
 

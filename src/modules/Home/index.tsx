@@ -1,3 +1,4 @@
+import Text from "@/components/Text";
 import { IGenerateBuyTcAddressResp } from "@/interfaces/gas-station";
 import { MDContainer } from "@/modules/styled";
 import { generateBuyTcAddress } from "@/services/gas-station";
@@ -15,7 +16,7 @@ declare global {
   }
 }
 
-const siteKey = "6LdCf9slAAAAAC7QwMb5kAjAt9sdVYQxg3rpKbTG";
+const siteKey = "6LevQD8mAAAAAEMxH0hhtwfP7dT1yuCXa1Ox3M1i";
 
 const Home = () => {
   const [paymentInfo, setPaymentInfo] = useState<
@@ -84,6 +85,7 @@ const Home = () => {
   return (
     <MDContainer>
       <Styled>
+        <Text size="h2">Buying TC</Text>
         <Container>
           {paymentInfo ? (
             <PaymentForm
