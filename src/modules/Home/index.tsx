@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Container, Styled } from "./Home.styled";
 import PaymentForm from "./PaymentForm";
-import { PayType } from "./PaytypeDropdown";
+import { PayType } from "./PaymentForm/PaytypeDropdown";
 import SubmitForm from "./SubmitForm";
 
 declare global {
@@ -86,7 +86,10 @@ const Home = () => {
       <Styled>
         <Container>
           {paymentInfo ? (
-            <PaymentForm paymentInfo={paymentInfo} />
+            <PaymentForm
+              paymentInfo={paymentInfo}
+              onClickBuyMore={() => setPaymentInfo(undefined)}
+            />
           ) : (
             <SubmitForm
               isProcessing={isProcessing}

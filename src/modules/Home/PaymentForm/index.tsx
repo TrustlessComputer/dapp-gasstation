@@ -2,17 +2,19 @@ import { IGenerateBuyTcAddressResp } from "@/interfaces/gas-station";
 import { formatBTCPrice, formatEthPrice } from "@/utils/format";
 import React from "react";
 import Text from "@/components/Text";
-import { PayType } from "../PaytypeDropdown";
+import { PayType } from "./PaytypeDropdown";
 import { Container } from "./PaymentForm.styled";
 import QRCodeGenerator from "@/components/QRCodeGenerator";
 import { formatDateTime } from "@/utils/time";
+import Button from "@/components/Button";
 
 interface PaymentFormProps {
   paymentInfo: IGenerateBuyTcAddressResp;
+  onClickBuyMore: () => void;
 }
 
 const PaymentForm = (props: PaymentFormProps) => {
-  const { paymentInfo } = props;
+  const { paymentInfo, onClickBuyMore } = props;
 
   const formatAmount =
     paymentInfo.payType === PayType.btc
@@ -33,6 +35,8 @@ const PaymentForm = (props: PaymentFormProps) => {
       <Text size="body-large">
         Receiver address: {paymentInfo.tcAddress || ""}
       </Text>
+
+      <Button onClick={onClickBuyMore}>Buy more</Button>
     </Container>
   );
 };

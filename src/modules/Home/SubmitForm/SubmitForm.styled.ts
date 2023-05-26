@@ -6,4 +6,8 @@ export const FormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: ${px2rem(24)};
+
+  .confirm-btn {
+    margin-top: ${px2rem(32)};
+  }
 `;

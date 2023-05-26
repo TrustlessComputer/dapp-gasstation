@@ -1,4 +1,4 @@
-# Trustless computer website
+# Trustless Gas Station
 
 ## Requirements
 
@@ -38,5 +38,3 @@ yarn build
 # or
 npm run build
 ```
-
-
