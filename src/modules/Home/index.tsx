@@ -5,6 +5,7 @@ import { generateBuyTcAddress } from "@/services/gas-station";
 import { getErrorMessage } from "@/utils/error";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { FAQ } from "./FAQ";
 import { Container, Styled } from "./Home.styled";
 import PaymentForm from "./PaymentForm";
 import { PayType } from "./PaymentForm/PaytypeDropdown";
@@ -98,6 +99,8 @@ const Home = () => {
               onSubmitGenerate={onSubmitGenerate}
             />
           )}
+
+          <FAQ />
         </Container>
       </Styled>
     </MDContainer>

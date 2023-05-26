@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import React, { useState } from "react";
 import PaytypeDropdown, { PayType } from "../PaymentForm/PaytypeDropdown";
 import { FormContainer } from "./SubmitForm.styled";
+import Text from "@/components/Text";
 
 interface IFormValue {
   amount: string;
@@ -66,7 +67,7 @@ const SubmitForm = (props: SubmitFormProps) => {
       }) => (
         <FormContainer onSubmit={handleSubmit}>
           <Input
-            title="Receiver TC Wallet address"
+            title="Receiving TC Wallet Address"
             id="toAddress"
             type="text"
             name="toAddress"
@@ -74,7 +75,7 @@ const SubmitForm = (props: SubmitFormProps) => {
             onBlur={handleBlur}
             value={values.toAddress}
             className="input"
-            placeholder={`Paste receiver TC wallet address here`}
+            placeholder={`Paste your TC wallet address here (0x1234...2345).`}
             errorMsg={
               errors.toAddress && touched.toAddress
                 ? errors.toAddress
@@ -91,7 +92,7 @@ const SubmitForm = (props: SubmitFormProps) => {
             onBlur={handleBlur}
             value={values.amount}
             className="input"
-            placeholder={`Amount TC`}
+            placeholder={`Amount`}
             errorMsg={
               errors.amount && touched.amount ? errors.amount : undefined
             }
@@ -107,6 +108,16 @@ const SubmitForm = (props: SubmitFormProps) => {
           >
             {isProcessing ? "Processing..." : "Buy"}
           </Button>
+
+          <Text className="claimer">
+            <span style={{ fontWeight: "700" }}>Disclaimer:</span> TC is sold
+            only for users to pay gas fees to use the utilities of dapps onTC
+            network (including but not limited to bridging, swapping, creating
+            artifacts, issuing BRC-20 tokens, issuing BRC-721 NFTs, deploying
+            smart contracts, and preserving files), NOT to raise funds. Each
+            wallet is capped at 100 TC. And lastly, US citizens are prohibited
+            from purchasing $TC at this time.
+          </Text>
         </FormContainer>
       )}
     </Formik>

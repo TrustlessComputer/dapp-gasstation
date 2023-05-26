@@ -12,5 +12,5 @@ export const Styled = styled.div`
 export const Container = styled.div`
   width: 100%;
   max-width: ${px2rem(800)};
-  margin-top: ${px2rem(48)};
+  margin-top: ${px2rem(60)};
 `;

@@ -10,4 +10,8 @@ export const FormContainer = styled.form`
   .confirm-btn {
     margin-top: ${px2rem(32)};
   }
+
+  .claimer {
+    line-height: ${px2rem(28)};
+  }
 `;
