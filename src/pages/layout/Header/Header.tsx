@@ -5,6 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Wrapper } from "./Header.styled";
 import Text from "@/components/Text";
+import { CDN_URL_ICONS } from "@/configs";
 
 const Header = () => {
   return (
@@ -12,9 +13,11 @@ const Header = () => {
       <Row gap="60px">
         <Link className="text-logo" to={ROUTE_PATH.HOME}>
           <Row gap="16px">
-            <Text color="white" size="h4">
-              Gas station
-            </Text>
+            <img
+              className="logo"
+              alt="logo"
+              src={`${CDN_URL_ICONS}/logo.svg`}
+            />
           </Row>
         </Link>
       </Row>
