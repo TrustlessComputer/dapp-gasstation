@@ -38,7 +38,7 @@ const OverlayWrapper = styled(OverlayTrigger)``;
 const Wrapper = styled.div<{ show?: boolean }>`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 
   background: ${({ theme, show }) =>
@@ -48,8 +48,6 @@ const Wrapper = styled.div<{ show?: boolean }>`
   border-radius: ${px2rem(8)};
   height: ${px2rem(48)};
   cursor: pointer;
-
-  width: fit-content;
 
   .element {
     display: flex;

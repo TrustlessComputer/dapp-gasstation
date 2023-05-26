@@ -3,7 +3,7 @@ import { Input } from "@/components/Inputs";
 import { validateWalletAddress } from "@/utils";
 import { Formik } from "formik";
 import React, { useState } from "react";
-import PaytypeDropdown, { PayType } from "../PaytypeDropdown";
+import PaytypeDropdown, { PayType } from "../PaymentForm/PaytypeDropdown";
 import { FormContainer } from "./SubmitForm.styled";
 
 interface IFormValue {
