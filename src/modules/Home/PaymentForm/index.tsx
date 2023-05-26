@@ -63,7 +63,7 @@ const PaymentForm = (props: PaymentFormProps) => {
 
       <div className="wrap-receive-address">
         <Text color="text-five" size="body-large">
-          Receiver TC address: {paymentInfo.tcAddress || ""}
+          Receiving TC wallet address: <br></br> {paymentInfo.tcAddress || ""}
         </Text>
       </div>
     </Container>
