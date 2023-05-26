@@ -52,7 +52,7 @@ const PaymentForm = (props: PaymentFormProps) => {
           <IconSVG
             src={`${CDN_URL_ICONS}/ic-copy.svg`}
             maxWidth="24"
-            onClick={onClickCopy}
+            onClick={() => onClickCopy(paymentInfo.address || "")}
             className="icon-copy"
           />
         </div>
