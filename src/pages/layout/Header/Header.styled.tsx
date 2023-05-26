@@ -39,6 +39,25 @@ const Wrapper = styled(LayoutPadding)`
     }
   }
 
+  .rightContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: ${px2rem(16)};
+    position: relative;
+
+    .external-link {
+      display: flex;
+      align-items: center;
+      gap: ${px2rem(16)};
+      margin-right: ${px2rem(24)};
+
+      a {
+        color: ${({ theme }) => theme.white} !important;
+      }
+    }
+  }
+
   ${MediaQueryBuilder("lg", MediaLarge)}
   ${MediaQueryBuilder("xxl", MediaXl)}
 `;

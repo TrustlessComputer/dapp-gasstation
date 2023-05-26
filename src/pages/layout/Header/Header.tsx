@@ -18,6 +18,13 @@ const Header = () => {
           </Row>
         </Link>
       </Row>
+      <div className="rightContainer">
+        <div className="external-link">
+          <a href={"https://trustless.computer/"} target="_blank">
+            Trustless
+          </a>
+        </div>
+      </div>
     </Wrapper>
   );
 };
