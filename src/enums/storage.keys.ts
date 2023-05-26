@@ -1,0 +1,7 @@
+enum LocalStorageKey {
+  SELECTED_NETWORK = 'SELECTED_NETWORK',
+  NETWORK_LIST = 'NETWORK_LIST',
+  CURRENT_TC_ACCOUNT = 'CURRENT_TC_ACCOUNT',
+}
+
+export { LocalStorageKey };
