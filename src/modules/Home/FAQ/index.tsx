@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     title: "What is the price of TC?",
-    desc: "The $TC price is set at 1 TC = 0.0069 ETH.",
+    desc: "The TC price is set at 1 TC = 0.0069 ETH.",
   },
   {
     title: "How much TC is required?",
