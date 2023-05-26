@@ -30,9 +30,10 @@ const InputWrapper = styled.div`
   height: 52px;
   padding-left: 16px;
   padding-right: 16px;
+
+  background: ${({ theme }) => theme.bg.secondary};
+  border: 1px solid ${({ theme }) => theme["border-third"]};
   border-radius: 8px;
-  color: ${({ theme }) => theme["text-primary"]};
-  border: 1px solid ${({ theme }) => theme["border-primary"]};
 
   :focus {
     border-color: ${({ theme }) => theme["border-secondary"]};

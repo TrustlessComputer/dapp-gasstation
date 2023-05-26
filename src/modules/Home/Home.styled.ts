@@ -10,8 +10,6 @@ export const Styled = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  max-width: ${px2rem(640)};
+  max-width: ${px2rem(800)};
   padding: ${px2rem(32)};
-  border-radius: ${px2rem(16)};
-  background-color: ${({ theme }) => theme.bg.secondary};
 `;

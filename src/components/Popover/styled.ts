@@ -41,23 +41,26 @@ const Wrapper = styled.div<{ show?: boolean }>`
   /* align-items: center; */
   justify-content: center;
 
-  background: ${({ theme, show }) =>
-    show ? theme["button-primary"] : "transparent"};
-  border: 1px solid ${({ theme }) => theme["border-primary"]};
+  background: ${({ theme, show }) => theme.bg.secondary};
+  border: 1px solid ${({ theme }) => theme["border-third"]};
   padding: ${px2rem(0)} ${px2rem(12)};
   border-radius: ${px2rem(8)};
   height: ${px2rem(48)};
   cursor: pointer;
+
+  :hover {
+    border: 1px solid ${({ theme }) => theme["border-secondary"]};
+  }
 
   .element {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: ${px2rem(12)};
-    p {
+    /* p {
       color: ${({ theme, show }) =>
-        show ? theme["text-parallel"] : theme["text-highlight"]};
-    }
+      show ? theme["text-parallel"] : theme["text-highlight"]};
+    } */
   }
 
   :hover {
