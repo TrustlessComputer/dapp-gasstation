@@ -1,7 +1,12 @@
-import React, { HTMLInputTypeAttribute, useEffect, useRef, useState } from 'react';
-import styled, { DefaultTheme } from 'styled-components/macro';
-import { PasswordIcon } from '@/components/icons';
-import Text from '@/components/Text';
+import React, {
+  HTMLInputTypeAttribute,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import styled, { DefaultTheme } from "styled-components/macro";
+import { PasswordIcon } from "@/components/icons";
+import Text from "@/components/Text";
 
 const Container = styled.div`
   display: flex;
@@ -26,15 +31,15 @@ const InputWrapper = styled.div`
   padding-left: 16px;
   padding-right: 16px;
   border-radius: 8px;
-  color: ${({ theme }) => theme['text-primary']};
-  border: 1px solid ${({ theme }) => theme['border-primary']};
+  color: ${({ theme }) => theme["text-primary"]};
+  border: 1px solid ${({ theme }) => theme["border-primary"]};
 
   :focus {
-    border-color: ${({ theme }) => theme['border-secondary']};
+    border-color: ${({ theme }) => theme["border-secondary"]};
   }
   :hover {
     outline: none !important;
-    border-color: ${({ theme }) => theme['border-secondary']};
+    border-color: ${({ theme }) => theme["border-secondary"]};
   }
 
   .input-container-style {
@@ -42,8 +47,14 @@ const InputWrapper = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;
-    color: ${({ theme }) => theme['text-primary']};
+    color: ${({ theme }) => theme["text-primary"]};
     height: 100%;
+
+    :-webkit-autofill {
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: ${({ theme }) =>
+        theme["text-primary"]} !important;
+    }
   }
 
   .icon-container {
@@ -76,9 +87,9 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input = (props: InputProps) => {
   const {
-    type = 'text',
-    value = '',
-    placeholder = '',
+    type = "text",
+    value = "",
+    placeholder = "",
     onChange = () => {},
     onKeyDown = () => {},
     refInput,
@@ -91,7 +102,9 @@ const Input = (props: InputProps) => {
   } = props;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [currentType, setCurrentType] = useState<HTMLInputTypeAttribute | undefined>(type);
+  const [currentType, setCurrentType] = useState<
+    HTMLInputTypeAttribute | undefined
+  >(type);
   const inputTypeInit = useRef<string>(type);
 
   useEffect(() => {
@@ -100,14 +113,14 @@ const Input = (props: InputProps) => {
 
   const onClick = () => {
     setShowPassword(!showPassword);
-    setCurrentType(currentType === 'text' ? 'password' : 'text');
+    setCurrentType(currentType === "text" ? "password" : "text");
   };
 
   return (
     <Container className={classContainer}>
       {!!title && (
         <Text
-          style={{ textTransform: 'uppercase' }}
+          style={{ textTransform: "uppercase" }}
           size="tini"
           fontWeight="medium"
           color="text-secondary"
@@ -126,8 +139,9 @@ const Input = (props: InputProps) => {
           value={value}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          spellCheck="false"
         />
-        {inputTypeInit.current === 'password' && (
+        {inputTypeInit.current === "password" && (
           <div className="icon-container" onClick={onClick}>
             <PasswordIcon isShow={showPassword} />
           </div>

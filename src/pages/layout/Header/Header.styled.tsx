@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
-import { LayoutPadding } from '@/pages/layout/Layout.styled';
-import px2rem from '@/utils/px2rem';
-import { MediaQueryBuilder } from '@/theme';
+import styled, { css } from "styled-components";
+import { LayoutPadding } from "@/pages/layout/Layout.styled";
+import px2rem from "@/utils/px2rem";
+import { MediaQueryBuilder } from "@/theme";
 
 const MediaLarge = css`
   .balance-wrapper {
@@ -31,52 +31,16 @@ const Wrapper = styled(LayoutPadding)`
     height: ${px2rem(60)};
   }
 
-  .external-wrapper {
-    max-width: 30vw;
-    display: flex;
-    justify-content: end;
-  }
+  .text-logo {
+    text-decoration: none !important;
 
-  ${MediaQueryBuilder('lg', MediaLarge)}
-  ${MediaQueryBuilder('xxl', MediaXl)}
-`;
-
-const DropdownItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-
-  :hover {
-    opacity: 0.8;
-    * {
-      text-decoration: underline;
+    :hover {
+      opacity: 0.8;
     }
   }
 
-  .icon-disconnect {
-    padding: 8px;
-    background-color: ${({ theme }) => theme.red.C};
-    border-radius: 4px;
-  }
-
-  .text-disconnect {
-    color: ${({ theme }) => theme.red.C};
-  }
-
-  .icon-normal {
-    padding: 8px;
-    background-color: ${({ theme }) => theme.bg.third};
-    border-radius: 4px;
-  }
-
-  .text-normal {
-  }
+  ${MediaQueryBuilder("lg", MediaLarge)}
+  ${MediaQueryBuilder("xxl", MediaXl)}
 `;
 
-const DropdownList = styled.div`
-  display: grid;
-  gap: 12px !important;
-`;
-
-export { Wrapper, DropdownItem, DropdownList };
+export { Wrapper };

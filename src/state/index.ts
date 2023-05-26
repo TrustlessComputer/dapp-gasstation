@@ -1,20 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
-import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
-import thunk from 'redux-thunk';
-import reducer from './reducer';
-import { createFilter } from 'redux-persist-transform-filter';
-
-const saveIsLockedWallet = createFilter('wallet', ['isLocked', 'btcAddress']);
+import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import thunk from "redux-thunk";
+import reducer from "./reducer";
 
 const reducers = combineReducers(reducer);
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['wallet'],
-  transforms: [saveIsLockedWallet],
+  whitelist: ["application"],
+  transforms: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

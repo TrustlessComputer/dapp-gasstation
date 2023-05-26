@@ -1,13 +1,17 @@
-import styled from 'styled-components';
-import { Popover, OverlayTrigger } from 'react-bootstrap';
-import px2rem from '@/utils/px2rem';
+import styled from "styled-components";
+import { Popover, OverlayTrigger } from "react-bootstrap";
+import px2rem from "@/utils/px2rem";
 
 const PopoverWrapper = styled(Popover)<{ width?: number }>`
   background-color: ${({ theme }) => theme.bg.secondary};
-  border: 1px solid ${({ theme }) => theme['border-primary']};
-  width: ${({ width }) => width || 200}px;
-  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme["border-primary"]};
+  max-width: ${({ width }) => px2rem(width || 200)} !important;
+  border-radius: ${px2rem(8)};
   padding: ${px2rem(12)} ${px2rem(16)};
+  /* margin-top: ${px2rem(6)}; */
+
+  mix-blend-mode: normal;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
 
   &.popover {
     .popover-arrow {
@@ -31,11 +35,36 @@ const PopoverWrapper = styled(Popover)<{ width?: number }>`
 
 const OverlayWrapper = styled(OverlayTrigger)``;
 
-const IconWrapper = styled.div`
-  background: ${({ theme }) => theme.bg.third};
-  padding: 8px;
-  border-radius: 4px;
+const Wrapper = styled.div<{ show?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: ${({ theme, show }) =>
+    show ? theme["button-primary"] : "transparent"};
+  border: 1px solid ${({ theme }) => theme["border-primary"]};
+  padding: ${px2rem(0)} ${px2rem(12)};
+  border-radius: ${px2rem(8)};
+  height: ${px2rem(48)};
   cursor: pointer;
+
+  width: fit-content;
+
+  .element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: ${px2rem(12)};
+    p {
+      color: ${({ theme, show }) =>
+        show ? theme["text-parallel"] : theme["text-highlight"]};
+    }
+  }
+
+  :hover {
+    opacity: ${({ show }) => (show ? 1 : 0.8)};
+  }
 `;
 
-export { PopoverWrapper, OverlayWrapper, IconWrapper };
+export { PopoverWrapper, OverlayWrapper, Wrapper };

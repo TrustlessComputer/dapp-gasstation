@@ -1,90 +1,100 @@
-import IconSVG from '@/components/IconSVG';
+import { IGenerateBuyTcAddressResp } from "@/interfaces/gas-station";
+import { MDContainer } from "@/modules/styled";
+import { generateBuyTcAddress } from "@/services/gas-station";
+import { getErrorMessage } from "@/utils/error";
+import React, { useCallback, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { Container, Styled } from "./Home.styled";
+import PaymentForm from "./PaymentForm";
+import { PayType } from "./PaytypeDropdown";
+import SubmitForm from "./SubmitForm";
 
-import Text from '@/components/Text';
-import { DappsTabs } from '@/enums/tabs';
-import { useEffect, useState } from 'react';
-import { Tab, Tabs } from 'react-bootstrap';
-import queryString from 'query-string';
-import Artifacts from './Artifacts';
-import Names from './Names';
-import Nfts from './Nfts';
-import Tokens from './Tokens';
-import Transactions from './Transactions';
-import { StyledProfile, TabContainer } from './Home.styled';
-import { CDN_URL } from '@/configs';
-import { MDContainer } from '@/modules/styled';
+declare global {
+  interface Window {
+    grecaptcha?: any;
+  }
+}
+
+const siteKey = "6LdCf9slAAAAAC7QwMb5kAjAt9sdVYQxg3rpKbTG";
 
 const Home = () => {
-  const { tab } = queryString.parse(location.search) as { tab: string };
+  const [paymentInfo, setPaymentInfo] = useState<
+    IGenerateBuyTcAddressResp | undefined
+  >();
 
-  const [activeTab, setActiveTab] = useState(tab || DappsTabs.TRANSACTION);
+  const [token, setToken] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const onVerify = useCallback((token: string) => {
+    setToken(token);
+  }, []);
+
+  const handleLoaded = () => {
+    window.grecaptcha.ready(() => {
+      window.grecaptcha
+        .execute(siteKey, { action: "homepage" })
+        .then((token: string) => {
+          onVerify(token);
+        });
+    });
+  };
+
+  const addCapcha = () => {
+    // Add reCaptcha
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.addEventListener("load", handleLoaded);
+    document.body.appendChild(script);
+    return () => {
+      const script = document.createElement("script");
+      document.body.removeChild(script);
+    };
+  };
 
   useEffect(() => {
-    if (tab) {
-      setActiveTab(tab);
-    }
-  }, [tab]);
+    addCapcha();
+    const intervalID = setInterval(addCapcha, 100 * 1000);
+    return () => {
+      clearInterval(intervalID);
+    };
+  }, []);
 
-  const renderTitleTab = (tab: DappsTabs, src: string, text: string) => {
-    const isActive = tab === activeTab;
-    return (
-      <div className="tab-item">
-        <IconSVG maxWidth="28" maxHeight="28" src={src} color={isActive ? 'text-highlight' : 'white'} type="stroke" />
-        <Text className="tab-text" color={isActive ? 'text-highlight' : 'white'}>
-          {text}
-        </Text>
-      </div>
-    );
+  const onSubmitGenerate = async (
+    tcAddress: string,
+    tcAmount: number,
+    payType: PayType
+  ) => {
+    try {
+      setIsProcessing(true);
+      const data = await generateBuyTcAddress({
+        tcAddress,
+        tcAmount,
+        payType,
+        "g-recaptcha-response": token,
+      });
+      setPaymentInfo(data);
+    } catch (err) {
+      const { message } = getErrorMessage(err);
+      toast.error(message);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
     <MDContainer>
-      <StyledProfile className="row">
-        <TabContainer className="wrapper">
-          <Tabs
-            defaultActiveKey={activeTab}
-            id="uncontrolled-tab"
-            onSelect={key => setActiveTab(key || DappsTabs.NFT)}
-            activeKey={activeTab}
-          >
-            <Tab
-              mountOnEnter
-              eventKey={DappsTabs.NFT}
-              title={renderTitleTab(DappsTabs.NFT, `${CDN_URL}/icons/ic-hexagon.svg`, 'NFTs')}
-            >
-              <Nfts />
-            </Tab>
-            <Tab
-              mountOnEnter
-              eventKey={DappsTabs.TOKEN}
-              title={renderTitleTab(DappsTabs.TOKEN, `${CDN_URL}/icons/ic-coin-unbroken.svg`, 'Tokens')}
-            >
-              <Tokens />
-            </Tab>
-            <Tab
-              mountOnEnter
-              eventKey={DappsTabs.ARTIFACT}
-              title={renderTitleTab(DappsTabs.ARTIFACT, `${CDN_URL}/icons/ic-folder-open.svg`, 'Artifacts')}
-            >
-              <Artifacts />
-            </Tab>
-            <Tab
-              mountOnEnter
-              eventKey={DappsTabs.NAMES}
-              title={renderTitleTab(DappsTabs.NAMES, `${CDN_URL}/icons/ic-names.svg`, 'Names')}
-            >
-              <Names />
-            </Tab>
-            <Tab
-              mountOnEnter
-              eventKey={DappsTabs.TRANSACTION}
-              title={renderTitleTab(DappsTabs.TRANSACTION, `${CDN_URL}/icons/ic-arrow-switch.svg`, 'Transactions')}
-            >
-              <Transactions />
-            </Tab>
-          </Tabs>
-        </TabContainer>
-      </StyledProfile>
+      <Styled>
+        <Container>
+          {paymentInfo ? (
+            <PaymentForm paymentInfo={paymentInfo} />
+          ) : (
+            <SubmitForm
+              isProcessing={isProcessing}
+              onSubmitGenerate={onSubmitGenerate}
+            />
+          )}
+        </Container>
+      </Styled>
     </MDContainer>
   );
 };

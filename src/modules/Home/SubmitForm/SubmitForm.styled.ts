@@ -1,0 +1,9 @@
+import px2rem from "@/utils/px2rem";
+import styled from "styled-components";
+
+export const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: ${px2rem(24)};
+`;
