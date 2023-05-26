@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import PaytypeDropdown, { PayType } from "../PaymentForm/PaytypeDropdown";
 import { FormContainer } from "./SubmitForm.styled";
 import Text from "@/components/Text";
+import { ceilPrecised } from "@/utils/format";
 
 interface IFormValue {
   amount: string;
@@ -21,6 +22,9 @@ interface SubmitFormProps {
   ) => void;
 }
 
+const TC_ETH_PRICE = 0.0069;
+const TC_BTC_PRICE = 0.000472167;
+
 const SubmitForm = (props: SubmitFormProps) => {
   const { isProcessing, onSubmitGenerate } = props;
   const [payType, setPayType] = useState(PayType.eth);
@@ -29,15 +33,16 @@ const SubmitForm = (props: SubmitFormProps) => {
     const errors: Record<string, string> = {};
 
     if (!values.toAddress) {
-      errors.toAddress = "Receiver TC wallet address is required.";
+      errors.toAddress = "Receiving TC wallet address is required.";
     } else if (!validateWalletAddress(values.toAddress)) {
-      errors.toAddress = "Invalid receiver TC wallet address.";
+      errors.toAddress = "Invalid receiving TC wallet address.";
     }
 
     if (!values.amount) {
       errors.amount = "Amount is required.";
-    } else if (Number(values.amount) < 1 || Number(values.amount) > 100) {
-      errors.amount = "Amount min 1 and max 100.";
+    } else if (Number(values.amount) < 0.01 || Number(values.amount) > 100) {
+      errors.amount =
+        "The minimum amount is 0.01 TC. The maximum amount is 100 TC.";
     }
 
     return errors;
@@ -84,7 +89,11 @@ const SubmitForm = (props: SubmitFormProps) => {
           />
 
           <Input
-            title="Amount"
+            title={`Amount ( ~${
+              payType === PayType.eth && values.amount && !errors.amount
+                ? `${ceilPrecised(Number(values.amount) * TC_ETH_PRICE, 4)} ETH`
+                : `${ceilPrecised(Number(values.amount) * TC_BTC_PRICE, 5)} BTC`
+            } )`}
             id="amount"
             type="number"
             name="amount"
@@ -106,12 +115,12 @@ const SubmitForm = (props: SubmitFormProps) => {
             type="submit"
             className="confirm-btn"
           >
-            {isProcessing ? "Processing..." : "Buy"}
+            {isProcessing ? "Processing..." : "Get TC"}
           </Button>
 
           <Text className="claimer">
             <span style={{ fontWeight: "700" }}>Disclaimer:</span> TC is sold
-            only for users to pay gas fees to use the utilities of dapps onTC
+            only for users to pay gas fees to use the utilities of dapps on TC
             network (including but not limited to bridging, swapping, creating
             artifacts, issuing BRC-20 tokens, issuing BRC-721 NFTs, deploying
             smart contracts, and preserving files), NOT to raise funds. Each

@@ -19,7 +19,7 @@ const Header = () => {
               src={`${CDN_URL_ICONS}/logo.svg`}
             />
             <Text color="white" size="h5">
-              TC gas station
+              TC Gas Station
             </Text>
           </Row>
         </Link>

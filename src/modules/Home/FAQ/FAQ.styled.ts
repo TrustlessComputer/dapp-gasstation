@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   max-width: ${px2rem(800)};
-  margin-top: ${px2rem(180)};
+  margin-top: ${px2rem(140)};
 
   .title {
     align-self: center;

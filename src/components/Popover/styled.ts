@@ -52,6 +52,13 @@ const Wrapper = styled.div<{ show?: boolean }>`
     border: 1px solid ${({ theme }) => theme["border-secondary"]};
   }
 
+  .element-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .element {
     display: flex;
     flex-direction: row;
@@ -61,6 +68,16 @@ const Wrapper = styled.div<{ show?: boolean }>`
       color: ${({ theme, show }) =>
       show ? theme["text-parallel"] : theme["text-highlight"]};
     } */
+  }
+
+  .fa-arrow-down {
+    transform: rotate(0deg);
+    transition: transform 200ms ease-in-out;
+  }
+
+  .fa-arrow-open {
+    transform: rotate(-180deg);
+    transition: transform 200ms ease-in-out;
   }
 
   :hover {
