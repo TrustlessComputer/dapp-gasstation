@@ -135,7 +135,7 @@ const SubmitForm = (props: SubmitFormProps) => {
             artifacts, issuing BRC-20 tokens, issuing BRC-721 NFTs, deploying
             smart contracts, and preserving files), NOT to raise funds. Each
             wallet is capped at 100 TC. And lastly, US citizens are prohibited
-            from purchasing $TC at this time.
+            from purchasing TC at this time.
           </Text>
         </FormContainer>
       )}
