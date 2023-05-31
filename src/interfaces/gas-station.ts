@@ -17,6 +17,7 @@ export interface IHistoryBuyTcResp {
   id: string;
   tcAddress: string;
   payType: string;
+  paymentAmount: string;
   receiveAddress: string;
   tcAmount: string;
   txTcProcessBuy: string;

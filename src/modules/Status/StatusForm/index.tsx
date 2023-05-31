@@ -8,15 +8,17 @@ import Text from "@/components/Text";
 import { IHistoryBuyTcResp } from "@/interfaces/gas-station";
 import { getHistoryBuyTC } from "@/services/gas-station";
 import Table from "@/components/Table";
-import { formatTCPrice } from "@/utils/format";
+import { formatBTCPrice, formatEthPrice, formatTCPrice } from "@/utils/format";
 import { formatDateTime } from "@/utils/time";
 import IconSVG from "@/components/IconSVG";
 import { CDN_URL_ICONS } from "@/configs";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
+import { PayType } from "@/modules/Home/PaymentForm/PaytypeDropdown";
 
 const TABLE_HEADINGS = [
   "Transaction",
+  "Deposit amount",
   "Deposit address",
   "Amount",
   "Time",
@@ -61,6 +63,13 @@ const StatusForm = () => {
 
   const historyDatas = histories.map((history) => {
     const tx = history.txBtcProcessBuy || "-";
+    const formatAmount =
+      history.payType === PayType.btc
+        ? `${formatBTCPrice(history.paymentAmount)}`
+        : `${formatEthPrice(history.paymentAmount)}`;
+
+    const formatUnit = history.payType === PayType.btc ? " BTC" : " ETH";
+
     return {
       id: `${history.id}`,
       render: {
@@ -73,6 +82,22 @@ const StatusForm = () => {
           >
             {tx}
           </a>
+        ),
+
+        depositAmount: (
+          <div className="depositAddress">
+            <Text color="text-primary" size="body" fontWeight="semibold">
+              {formatAmount}
+              {formatUnit}
+            </Text>
+            <IconSVG
+              src={`${CDN_URL_ICONS}/ic-copy-white.svg`}
+              maxWidth="20"
+              onClick={() => onClickCopy(formatAmount)}
+              className="icon-copy"
+              color="white"
+            />
+          </div>
         ),
         depositAddress: (
           <div className="depositAddress">
