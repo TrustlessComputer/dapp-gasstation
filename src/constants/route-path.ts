@@ -1,4 +1,5 @@
 export const ROUTE_PATH = {
-  NOT_FOUND: '*',
-  HOME: '/',
+  NOT_FOUND: "*",
+  HOME: "/",
+  STATUS: "/status",
 };

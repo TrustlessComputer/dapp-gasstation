@@ -12,3 +12,18 @@ export interface IGenerateBuyTcAddressResp {
   expiredAt: string;
   payType: string;
 }
+
+export interface IHistoryBuyTcResp {
+  id: string;
+  tcAddress: string;
+  payType: string;
+  receiveAddress: string;
+  tcAmount: string;
+  txTcProcessBuy: string;
+  txBtcProcessBuy: string;
+  status: number;
+  statusStr: string;
+  expiredAt: string;
+  createdAt: string;
+  isConfirmed: boolean;
+}
