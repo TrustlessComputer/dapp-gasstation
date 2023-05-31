@@ -62,4 +62,24 @@ const Wrapper = styled(LayoutPadding)`
   ${MediaQueryBuilder("xxl", MediaXl)}
 `;
 
-export { Wrapper };
+const StyledTab = styled.div<{ isActive: boolean }>`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: ${px2rem(10)} ${px2rem(20)};
+
+  border-bottom: 2px solid
+    ${({ theme, isActive }) =>
+      isActive ? theme["button-primary"] : "transparent"};
+
+  color: ${({ theme }) => theme["button-primary"]};
+  font-size: ${px2rem(16)};
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+export { Wrapper, StyledTab };

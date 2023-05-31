@@ -1,11 +1,11 @@
-import px2rem from '@/utils/px2rem';
-import styled, { DefaultTheme } from 'styled-components';
+import px2rem from "@/utils/px2rem";
+import styled, { DefaultTheme } from "styled-components";
 
 export const StyledTable = styled.div`
   .table {
     position: relative;
     overflow: scroll;
-    color: ${({ theme }: { theme: DefaultTheme }) => theme['text-third']};
+    color: ${({ theme }: { theme: DefaultTheme }) => theme["text-third"]};
 
     & > :not(caption) > * > * {
       padding: {
@@ -25,24 +25,29 @@ export const StyledTable = styled.div`
         color: #b6b6b6;
         position: sticky;
         top: 0;
-        /* background-color: ${({ theme }: { theme: DefaultTheme }) => theme.white}; */
+        /* background-color: ${({ theme }: { theme: DefaultTheme }) =>
+          theme.white}; */
         z-index: 10;
         font-size: 14px;
 
-        @media screen and (max-width: ${({ theme }: { theme: DefaultTheme }) => theme.breakpoint.lg}) {
+        @media screen and (max-width: ${({ theme }: { theme: DefaultTheme }) =>
+            theme.breakpoint.lg}) {
           font-size: ${px2rem(14)};
         }
 
-        @media screen and (max-width: ${({ theme }: { theme: DefaultTheme }) => theme.breakpoint.sm}) {
+        @media screen and (max-width: ${({ theme }: { theme: DefaultTheme }) =>
+            theme.breakpoint.sm}) {
           white-space: nowrap;
         }
       }
 
       .tableData {
-        border-bottom: 1px solid ${({ theme }: { theme: DefaultTheme }) => theme.primary.light};
+        border-bottom: 1px solid
+          ${({ theme }: { theme: DefaultTheme }) => theme.primary.light};
 
         &:hover {
-          background-color: ${({ theme }: { theme: DefaultTheme }) => theme.primary.light};
+          background-color: ${({ theme }: { theme: DefaultTheme }) =>
+            theme.primary.light};
         }
 
         &_item {
@@ -61,7 +66,7 @@ export const StyledTable = styled.div`
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: ${px2rem(50)};
+      margin-top: ${px2rem(120)};
 
       .content {
         margin-top: ${px2rem(16)};
