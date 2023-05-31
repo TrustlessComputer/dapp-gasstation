@@ -23,7 +23,9 @@ export const Container = styled.div`
     th:nth-child(3),
     td:nth-child(3),
     th:nth-child(4),
-    td:nth-child(4) {
+    td:nth-child(4),
+    th:nth-child(5),
+    td:nth-child(5) {
       text-align: right;
     }
 
@@ -51,6 +53,20 @@ export const Container = styled.div`
 
     .transaction {
       font-weight: 500;
+    }
+
+    .depositAddress {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: ${px2rem(6)};
+
+      .icon-copy {
+        cursor: pointer;
+        :hover {
+          opacity: 0.8;
+        }
+      }
     }
   }
 `;

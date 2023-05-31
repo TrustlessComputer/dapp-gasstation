@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import { Input } from "@/components/Inputs";
-import { validateWalletAddress } from "@/utils";
+import { formatLongAddress, validateWalletAddress } from "@/utils";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { Container, FormContainer } from "./StatusForm.styled";
@@ -10,8 +10,18 @@ import { getHistoryBuyTC } from "@/services/gas-station";
 import Table from "@/components/Table";
 import { formatTCPrice } from "@/utils/format";
 import { formatDateTime } from "@/utils/time";
+import IconSVG from "@/components/IconSVG";
+import { CDN_URL_ICONS } from "@/configs";
+import copy from "copy-to-clipboard";
+import toast from "react-hot-toast";
 
-const TABLE_HEADINGS = ["Transaction", "Amount", "Time", "Status"];
+const TABLE_HEADINGS = [
+  "Transaction",
+  "Deposit address",
+  "Amount",
+  "Time",
+  "Status",
+];
 
 interface IFormValue {
   address: string;
@@ -44,6 +54,11 @@ const StatusForm = () => {
     }
   };
 
+  const onClickCopy = (address: string) => {
+    copy(address);
+    toast.success("Copied");
+  };
+
   const historyDatas = histories.map((history) => {
     const tx = history.txBtcProcessBuy || "-";
     return {
@@ -58,6 +73,20 @@ const StatusForm = () => {
           >
             {tx}
           </a>
+        ),
+        depositAddress: (
+          <div className="depositAddress">
+            <Text color="text-primary" size="body">
+              {formatLongAddress(history.receiveAddress)}
+            </Text>
+            <IconSVG
+              src={`${CDN_URL_ICONS}/ic-copy-white.svg`}
+              maxWidth="20"
+              onClick={() => onClickCopy(history.receiveAddress)}
+              className="icon-copy"
+              color="white"
+            />
+          </div>
         ),
         amount: (
           <Text color="text-primary" size="body" fontWeight="semibold">
