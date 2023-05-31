@@ -116,6 +116,7 @@ const StatusForm = () => {
               errorMsg={
                 errors.address && touched.address ? errors.address : undefined
               }
+              autoFocus
             />
 
             <Button
