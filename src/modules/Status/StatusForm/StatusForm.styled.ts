@@ -25,7 +25,9 @@ export const Container = styled.div`
     th:nth-child(4),
     td:nth-child(4),
     th:nth-child(5),
-    td:nth-child(5) {
+    td:nth-child(5),
+    th:nth-child(6),
+    td:nth-child(6) {
       text-align: right;
     }
 
@@ -59,6 +61,7 @@ export const Container = styled.div`
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: flex-end;
       gap: ${px2rem(6)};
 
       .icon-copy {
