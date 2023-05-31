@@ -49,7 +49,7 @@ const StatusForm = () => {
       setIsProcessing(true);
       setHistories([]);
       const data = await getHistoryBuyTC(payload.address);
-      setHistories(data);
+      setHistories(data.reverse());
     } catch (error) {
     } finally {
       setIsProcessing(false);
