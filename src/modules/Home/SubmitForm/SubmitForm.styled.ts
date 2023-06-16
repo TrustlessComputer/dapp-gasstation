@@ -14,4 +14,12 @@ export const FormContainer = styled.form`
   .claimer {
     line-height: ${px2rem(28)};
   }
+  
+  .custom-text {
+    text-decoration: underline;
+    color: #B1E3FF;
+    cursor: pointer;
+    text-align: right;
+    margin-top: ${px2rem(8)};
+  }
 `;

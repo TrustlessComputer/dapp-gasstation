@@ -7,6 +7,7 @@ import PaytypeDropdown, { PayType } from "../PaymentForm/PaytypeDropdown";
 import { FormContainer } from "./SubmitForm.styled";
 import Text from "@/components/Text";
 import { ceilPrecised } from "@/utils/format";
+import PackageList from "@/modules/Home/PackageList";
 
 interface IFormValue {
   amount: string;
@@ -25,9 +26,69 @@ interface SubmitFormProps {
 const TC_ETH_PRICE = 0.0069;
 const TC_BTC_PRICE = 0.000472167;
 
+export interface ICoin {
+  name: string;
+  amount: number;
+}
+
+export interface IPackage {
+  id: string;
+  title: string;
+  coins: ICoin[];
+}
+
+const PACKAGES: Array<IPackage> = [
+  {
+    id: 'package_1',
+    title: 'Package 1',
+    coins: [
+      {
+        name: 'TC',
+        amount: 100
+      }
+    ]
+  },
+  {
+    id: 'package_2',
+    title: 'Package 2',
+    coins: [
+      {
+        name: 'TC',
+        amount: 100
+      },
+      {
+        name: 'BTC',
+        amount: 100
+      },
+    ]
+  },
+  {
+    id: 'package_3',
+    title: 'Package 3',
+    coins: [
+      {
+        name: 'TC',
+        amount: 100
+      },
+      {
+        name: 'BTC',
+        amount: 100
+      },
+      {
+        name: 'WBTC',
+        amount: 100
+      },
+    ]
+  },
+];
+
+
+
+
 const SubmitForm = (props: SubmitFormProps) => {
   const { isProcessing, onSubmitGenerate } = props;
   const [payType, setPayType] = useState(PayType.eth);
+  const [isCustomPackage, setIsCustomPackage] = useState(false);
 
   const validateForm = (values: IFormValue): Record<string, string> => {
     const errors: Record<string, string> = {};
@@ -116,6 +177,11 @@ const SubmitForm = (props: SubmitFormProps) => {
               errors.amount && touched.amount ? errors.amount : undefined
             }
           />
+
+          <div>
+            <PackageList data={PACKAGES}/>
+            <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom</Text>
+          </div>
 
           <PaytypeDropdown payType={payType} setPayType={setPayType} />
 
