@@ -6,6 +6,15 @@ const PackageItemStyled = styled.div`
   border: 1px solid #CECECE;
   border-radius: 8px;
   padding: ${px2rem(16)};
+  cursor: pointer;
+  
+  &.isSelected {
+    background-color: #000000;
+    
+    .package-coins {
+      color: #FFFFFF;
+    }
+  }
   
   .package-title {
     font-size: ${px2rem(14)};
@@ -18,15 +27,14 @@ const PackageItemStyled = styled.div`
     flex-direction: column;
     gap: 8px;
     
-    color: #FFFFFF;
+    color: #FFFFFFA0;
   }
 `;
 
 const PackageItem = (props: any) => {
-  const { data } = props;
-  console.log('data', data);
+  const { data, isSelected, onClick } = props;
   return (
-    <PackageItemStyled>
+    <PackageItemStyled className={isSelected ? 'isSelected' : ''} onClick={onClick}>
       <div className={"package-title"}>{data.title}</div>
       <div className={"package-coins"}>
         {
@@ -37,7 +45,6 @@ const PackageItem = (props: any) => {
           })
         }
       </div>
-
     </PackageItemStyled>
   )
 };

@@ -22,4 +22,10 @@ export const FormContainer = styled.form`
     text-align: right;
     margin-top: ${px2rem(8)};
   }
+  
+  .list-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: ${px2rem(16)};
+  }
 `;

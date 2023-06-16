@@ -32,14 +32,14 @@ export interface ICoin {
 }
 
 export interface IPackage {
-  id: string;
+  id: number;
   title: string;
   coins: ICoin[];
 }
 
 const PACKAGES: Array<IPackage> = [
   {
-    id: 'package_1',
+    id: 1,
     title: 'Package 1',
     coins: [
       {
@@ -49,7 +49,7 @@ const PACKAGES: Array<IPackage> = [
     ]
   },
   {
-    id: 'package_2',
+    id: 2,
     title: 'Package 2',
     coins: [
       {
@@ -63,7 +63,7 @@ const PACKAGES: Array<IPackage> = [
     ]
   },
   {
-    id: 'package_3',
+    id: 3,
     title: 'Package 3',
     coins: [
       {
@@ -89,9 +89,16 @@ const SubmitForm = (props: SubmitFormProps) => {
   const { isProcessing, onSubmitGenerate } = props;
   const [payType, setPayType] = useState(PayType.eth);
   const [isCustomPackage, setIsCustomPackage] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<IPackage>(PACKAGES[0]);
+
+  const handleSelectPackage = (p: any) => {
+    setSelectedPackage(p);
+  }
 
   const validateForm = (values: IFormValue): Record<string, string> => {
     const errors: Record<string, string> = {};
+
+    console.log('validateForm', values);
 
     if (!values.toAddress) {
       errors.toAddress = "Receiving TC wallet address is required.";
@@ -149,42 +156,84 @@ const SubmitForm = (props: SubmitFormProps) => {
             }
           />
 
-          <Input
-            title={`Amount ${
-              values.amount && !errors.amount
-                ? `( ~${
-                    payType === PayType.eth
-                      ? `${ceilPrecised(
-                          Number(values.amount) * TC_ETH_PRICE,
-                          4
-                        )} ETH`
-                      : `${ceilPrecised(
-                          Number(values.amount) * TC_BTC_PRICE,
-                          5
-                        )} BTC`
-                  } )`
-                : ""
-            }`}
-            id="amount"
-            type="number"
-            name="amount"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.amount}
-            className="input"
-            placeholder={`Amount`}
-            errorMsg={
-              errors.amount && touched.amount ? errors.amount : undefined
-            }
-          />
 
+          <PaytypeDropdown payType={payType} setPayType={setPayType} />
           <div>
-            <PackageList data={PACKAGES}/>
+            <PackageList data={PACKAGES} onSelect={handleSelectPackage}/>
             <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom</Text>
           </div>
 
-          <PaytypeDropdown payType={payType} setPayType={setPayType} />
-
+          {
+            isCustomPackage && (
+              <div className={"list-inputs"}>
+                <Input
+                  // title={`Amount ${
+                  //   values.amount && !errors.amount
+                  //     ? `( ~${
+                  //       payType === PayType.eth
+                  //         ? `${ceilPrecised(
+                  //           Number(values.amount) * TC_ETH_PRICE,
+                  //           4
+                  //         )} ETH`
+                  //         : `${ceilPrecised(
+                  //           Number(values.amount) * TC_BTC_PRICE,
+                  //           5
+                  //         )} BTC`
+                  //     } )`
+                  //     : ""
+                  // }`}
+                  title={"Amount TC"}
+                  // id="amount"
+                  type="number"
+                  name="amountTC"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.amount}
+                  className="input"
+                  placeholder={`Amount TC`}
+                  errorMsg={
+                    errors.amount && touched.amount ? errors.amount : undefined
+                  }
+                />
+                {
+                  selectedPackage?.id > 1 && (
+                    <Input
+                      title={"Amount BTC"}
+                      // id="amount"
+                      type="number"
+                      name="amountBTC"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.amount}
+                      className="input"
+                      placeholder={`Amount BTC`}
+                      errorMsg={
+                        errors.amount && touched.amount ? errors.amount : undefined
+                      }
+                    />
+                  )
+                }
+                {
+                  selectedPackage?.id > 2 && (
+                    <Input
+                      title={"Amount WBTC"}
+                      // id="amount"
+                      type="number"
+                      name="amountWBTC"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.amount}
+                      className="input"
+                      placeholder={`Amount WBTC`}
+                      errorMsg={
+                        errors.amount && touched.amount ? errors.amount : undefined
+                      }
+                    />
+                  )
+                }
+              </div>
+            )
+          }
           <Button
             isLoading={isProcessing}
             disabled={isProcessing}
