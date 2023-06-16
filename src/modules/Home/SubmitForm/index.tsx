@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import { Input } from "@/components/Inputs";
-import { validateWalletAddress } from "@/utils";
+import {validateBTCAddressTaproot, validateWalletAddress} from "@/utils";
 import { Formik } from "formik";
 import React, {useEffect, useState} from "react";
 import PaytypeDropdown, { PayType } from "../PaymentForm/PaytypeDropdown";
@@ -14,6 +14,7 @@ interface IFormValue {
   amountBTC: string;
   amountWBTC: string;
   toAddress: string;
+  toBTCAddress: string;
   isCustomPackage: boolean;
   selectedPackage?: IPackage;
   payType?: any;
@@ -98,10 +99,15 @@ const Form = (props: any) => {
     setFieldValue,
   } = props;
 
-  const { isProcessing, onSubmitGenerate } = props;
+  const { isProcessing } = props;
   const [payType, setPayType] = useState(PayType.eth);
   const [isCustomPackage, setIsCustomPackage] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<IPackage>(PACKAGES[0]);
+
+  console.log('errors', errors);
+  console.log('values', values);
+  console.log('touched', touched);
+  console.log('====');
 
   useEffect(() => {
     setFieldValue('isCustomPackage', isCustomPackage, true);
@@ -129,32 +135,13 @@ const Form = (props: any) => {
   }
 
   // @ts-ignore
-  // @ts-ignore
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <Input
-        title="Receiving TC Wallet Address"
-        id="toAddress"
-        type="text"
-        name="toAddress"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.toAddress}
-        className="input"
-        placeholder={`Paste your TC wallet address here (0x1234...2345).`}
-        errorMsg={
-          errors.toAddress && touched.toAddress
-            ? errors.toAddress
-            : undefined
-        }
-      />
-
       <PaytypeDropdown payType={payType} setPayType={setPayType} />
       <div>
         <PackageList data={PACKAGES} onSelect={handleSelectPackage}/>
-        <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom</Text>
+        <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom amount</Text>
       </div>
-
       {
         isCustomPackage && (
           <div className={"list-inputs"}>
@@ -226,6 +213,41 @@ const Form = (props: any) => {
           </div>
         )
       }
+      <Input
+        title="Receiving TC Wallet Address"
+        type="text"
+        name="toAddress"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.toAddress}
+        className="input"
+        placeholder={`Paste your TC wallet address here (0x1234...2345).`}
+        errorMsg={
+          errors.toAddress && touched.toAddress
+            ? errors.toAddress
+            : undefined
+        }
+      />
+      {
+        isCustomPackage && selectedPackage?.id && selectedPackage?.id > 1 && (
+          <Input
+            title="Receiving WTC Wallet Address"
+            type="text"
+            name="toBTCAddress"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.toBTCAddress}
+            className="input"
+            placeholder={`Paste your WTC wallet address here.`}
+            errorMsg={
+              errors.toBTCAddress && touched.toBTCAddress
+                ? errors.toBTCAddress
+                : undefined
+            }
+          />
+        )
+      }
+
       <Button
         isLoading={isProcessing}
         disabled={isProcessing}
@@ -250,19 +272,6 @@ const Form = (props: any) => {
 
 const SubmitForm = (props: SubmitFormProps) => {
   const { isProcessing, onSubmitGenerate } = props;
-  // const [payType, setPayType] = useState(PayType.eth);
-  // const [isCustomPackage, setIsCustomPackage] = useState(false);
-  // const [selectedPackage, setSelectedPackage] = useState<IPackage>(PACKAGES[0]);
-  //
-  // useEffect(() => {
-  //   if(selectedPackage) {
-  //
-  //   }
-  // }, [JSON.stringify(selectedPackage)]);
-  //
-  // const handleSelectPackage = (p: any) => {
-  //   setSelectedPackage(p);
-  // }
 
   const validateForm = (values: IFormValue): Record<string, string> => {
     const errors: Record<string, string> = {};
@@ -273,6 +282,14 @@ const SubmitForm = (props: SubmitFormProps) => {
       errors.toAddress = "Receiving TC wallet address is required.";
     } else if (!validateWalletAddress(values.toAddress)) {
       errors.toAddress = "Invalid receiving TC wallet address.";
+    }
+
+    if(values?.isCustomPackage && values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
+      if (!values.toBTCAddress) {
+        errors.toBTCAddress = "Receiving WTC wallet address is required.";
+      } else if (!validateBTCAddressTaproot(values.toBTCAddress)) {
+        errors.toBTCAddress = "Invalid receiving WTC wallet address.";
+      }
     }
 
     if(values?.isCustomPackage) {
@@ -315,6 +332,7 @@ const SubmitForm = (props: SubmitFormProps) => {
       key="buy"
       initialValues={{
         toAddress: "",
+        toBTCAddress: "",
         amountTC: "",
         amountBTC: "",
         amountWBTC: "",
@@ -324,7 +342,7 @@ const SubmitForm = (props: SubmitFormProps) => {
       onSubmit={handleSubmit}
     >
       {(props) => (
-        <Form {...props}/>
+        <Form isProcessing={isProcessing} {...props}/>
       )}
     </Formik>
   );
