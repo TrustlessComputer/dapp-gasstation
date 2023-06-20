@@ -35,10 +35,10 @@ const PackageItem = (props: any) => {
   const { data, isSelected, onClick } = props;
   return (
     <PackageItemStyled className={isSelected ? 'isSelected' : ''} onClick={onClick}>
-      <div className={"package-title"}>{data.title}</div>
+      <div className={"package-title"}>{data.name}</div>
       <div className={"package-coins"}>
         {
-          data?.coins?.map((coin: any) => {
+          data?.details?.map((coin: any) => {
            return (
              <div>{coin?.name} : {coin?.amount}</div>
            )

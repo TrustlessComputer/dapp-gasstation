@@ -8,6 +8,7 @@ import { FormContainer } from "./SubmitForm.styled";
 import Text from "@/components/Text";
 import { ceilPrecised } from "@/utils/format";
 import PackageList from "@/modules/Home/PackageList";
+import {getPackageList} from "@/services/gas-station";
 
 interface IFormValue {
   amountTC: string;
@@ -33,60 +34,61 @@ const TC_ETH_PRICE = 0.0069;
 const TC_BTC_PRICE = 0.000472167;
 
 export interface ICoin {
-  name: string;
+  currency: string;
   amount: number;
+  id: number;
 }
 
 export interface IPackage {
   id?: number;
   title?: string;
-  coins?: ICoin[];
+  details?: ICoin[];
 }
 
-const PACKAGES: Array<IPackage> = [
-  {
-    id: 1,
-    title: 'Package 1',
-    coins: [
-      {
-        name: 'TC',
-        amount: 100
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: 'Package 2',
-    coins: [
-      {
-        name: 'TC',
-        amount: 100
-      },
-      {
-        name: 'BTC',
-        amount: 0.005
-      },
-    ]
-  },
-  {
-    id: 3,
-    title: 'Package 3',
-    coins: [
-      {
-        name: 'TC',
-        amount: 100
-      },
-      {
-        name: 'BTC',
-        amount: 0.005
-      },
-      {
-        name: 'WBTC',
-        amount: 0.005
-      },
-    ]
-  },
-];
+// const PACKAGES: Array<IPackage> = [
+//   {
+//     id: 1,
+//     title: 'Package 1',
+//     coins: [
+//       {
+//         currency: 'TC',
+//         amount: 100
+//       }
+//     ]
+//   },
+//   {
+//     id: 2,
+//     title: 'Package 2',
+//     coins: [
+//       {
+//         currency: 'TC',
+//         amount: 100
+//       },
+//       {
+//         currency: 'BTC',
+//         amount: 0.005
+//       },
+//     ]
+//   },
+//   {
+//     id: 3,
+//     title: 'Package 3',
+//     coins: [
+//       {
+//         currency: 'TC',
+//         amount: 100
+//       },
+//       {
+//         currency: 'BTC',
+//         amount: 0.005
+//       },
+//       {
+//         currency: 'WBTC',
+//         amount: 0.005
+//       },
+//     ]
+//   },
+// ];
 
 const Form = (props: any) => {
   const {
@@ -102,12 +104,26 @@ const Form = (props: any) => {
   const { isProcessing } = props;
   const [payType, setPayType] = useState(PayType.eth);
   const [isCustomPackage, setIsCustomPackage] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<IPackage>(PACKAGES[0]);
+  const [selectedPackage, setSelectedPackage] = useState<IPackage>();
+  const [packages, setPackages] = useState<IPackage[]>([]);
 
+  console.log('packages', packages);
   console.log('errors', errors);
   console.log('values', values);
   console.log('touched', touched);
   console.log('====');
+
+  useEffect(() => {
+    getListPackages();
+  }, []);
+
+  const getListPackages = async () => {
+    const res = await getPackageList();
+    setPackages(res);
+    if(packages?.length > 1) {
+      setSelectedPackage(packages[0]);
+    }
+  }
 
   useEffect(() => {
     setFieldValue('isCustomPackage', isCustomPackage, true);
@@ -120,11 +136,11 @@ const Form = (props: any) => {
   useEffect(() => {
     if(selectedPackage) {
       // @ts-ignore
-      setFieldValue('amountTC', selectedPackage?.coins[0]?.amount || 0, true);
+      setFieldValue('amountTC', selectedPackage?.details[0]?.amount || 0, true);
       // @ts-ignore
-      setFieldValue('amountBTC', selectedPackage?.coins[1]?.amount || 0, true);
+      setFieldValue('amountBTC', selectedPackage?.details[1]?.amount || 0, true);
       // @ts-ignore
-      setFieldValue('amountWBTC', selectedPackage?.coins[2]?.amount || 0, true);
+      setFieldValue('amountWBTC', selectedPackage?.details[2]?.amount || 0, true);
 
       setFieldValue('selectedPackage', selectedPackage, true);
     }
@@ -139,7 +155,7 @@ const Form = (props: any) => {
     <FormContainer onSubmit={handleSubmit}>
       <PaytypeDropdown payType={payType} setPayType={setPayType} />
       <div>
-        <PackageList data={PACKAGES} onSelect={handleSelectPackage}/>
+        <PackageList data={packages} onSelect={handleSelectPackage}/>
         <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom amount</Text>
       </div>
       {

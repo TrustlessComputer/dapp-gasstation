@@ -5,6 +5,8 @@ import {
 } from "@/interfaces/gas-station";
 import { camelCaseKeys } from "@/utils";
 import { apiClient } from ".";
+import {swrFetcher} from "@/utils/swr";
+import {API_EXCHANGE_URL} from "@/configs";
 
 const API_PATH = "";
 
@@ -28,4 +30,12 @@ export const getHistoryBuyTC = async (
   } catch (err) {
     throw err;
   }
+};
+
+export const getPackageList = async (
+) => {
+  return swrFetcher(`${API_EXCHANGE_URL}/package/list`, {
+    method: 'GET',
+    error: 'getPackageList',
+  });
 };
