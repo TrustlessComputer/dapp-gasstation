@@ -1,23 +1,21 @@
 import Button from "@/components/Button";
-import { Input } from "@/components/Inputs";
-import { formatLongAddress, validateWalletAddress } from "@/utils";
-import { Formik } from "formik";
-import React, { useState } from "react";
-import { Container, FormContainer } from "./StatusForm.styled";
+import {Input} from "@/components/Inputs";
+import {formatLongAddress, validateWalletAddress} from "@/utils";
+import {Formik} from "formik";
+import React, {useState} from "react";
+import {Container, FormContainer} from "./StatusForm.styled";
 import Text from "@/components/Text";
-import { IHistoryBuyTcResp } from "@/interfaces/gas-station";
-import { getHistoryBuyTC } from "@/services/gas-station";
+import {IHistoryBuyTcResp} from "@/interfaces/gas-station";
+import {getHistoryMakeOrder} from "@/services/gas-station";
 import Table from "@/components/Table";
-import { formatBTCPrice, formatEthPrice, formatTCPrice } from "@/utils/format";
-import { formatDateTime } from "@/utils/time";
+import {formatDateTime} from "@/utils/time";
 import IconSVG from "@/components/IconSVG";
-import { CDN_URL_ICONS } from "@/configs";
+import {CDN_URL_ICONS} from "@/configs";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
-import { PayType } from "@/modules/Home/PaymentForm/PaytypeDropdown";
 
 const TABLE_HEADINGS = [
-  "Transaction",
+  // "Transaction",
   "Deposit amount",
   "Deposit address",
   "Amount",
@@ -48,7 +46,8 @@ const StatusForm = () => {
     try {
       setIsProcessing(true);
       setHistories([]);
-      const data = await getHistoryBuyTC(payload.address);
+      // const data = await getHistoryBuyTC(payload.address);
+      const data = await getHistoryMakeOrder({address: payload.address});
       setHistories(data.reverse());
     } catch (error) {
     } finally {
@@ -63,37 +62,31 @@ const StatusForm = () => {
 
   const historyDatas = histories.map((history) => {
     const tx = history.txBtcProcessBuy || "-";
-    const formatAmount =
-      history.payType === PayType.btc
-        ? `${formatBTCPrice(history.paymentAmount)}`
-        : `${formatEthPrice(history.paymentAmount)}`;
-
-    const formatUnit = history.payType === PayType.btc ? " BTC" : " ETH";
 
     return {
       id: `${history.id}`,
       render: {
-        transaction: (
-          <a
-            href={history.txBtcProcessBuy || undefined}
-            className="transaction"
-            rel="rel=”noopener noreferrer”"
-            target="_blank"
-          >
-            {tx}
-          </a>
-        ),
+        // transaction: (
+        //   <a
+        //     href={history.txBtcProcessBuy || undefined}
+        //     className="transaction"
+        //     rel="rel=”noopener noreferrer”"
+        //     target="_blank"
+        //   >
+        //     {tx}
+        //   </a>
+        // ),
 
         depositAmount: (
           <div className="depositAddress">
             <Text color="text-primary" size="body" fontWeight="semibold">
-              {formatAmount}
-              {formatUnit}
+              {history?.paymentAmount} {" "}
+              {history?.paymentCurrency}
             </Text>
             <IconSVG
               src={`${CDN_URL_ICONS}/ic-copy-white.svg`}
               maxWidth="20"
-              onClick={() => onClickCopy(formatAmount)}
+              onClick={() => onClickCopy(history?.paymentAmount)}
               className="icon-copy"
               color="white"
             />
@@ -102,21 +95,29 @@ const StatusForm = () => {
         depositAddress: (
           <div className="depositAddress">
             <Text color="text-primary" size="body">
-              {formatLongAddress(history.receiveAddress)}
+              {formatLongAddress(history.paymentAddress)}
             </Text>
             <IconSVG
               src={`${CDN_URL_ICONS}/ic-copy-white.svg`}
               maxWidth="20"
-              onClick={() => onClickCopy(history.receiveAddress)}
+              onClick={() => onClickCopy(history.paymentAddress)}
               className="icon-copy"
               color="white"
             />
           </div>
         ),
         amount: (
-          <Text color="text-primary" size="body" fontWeight="semibold">
-            {history.tcAmount ? formatTCPrice(history.tcAmount) + " TC" : "-"}
-          </Text>
+          <div className={"receive-amount-list"}>
+            {
+              history?.details?.map((detail: any) => {
+                return (
+                  <Text color="text-primary" size="body" fontWeight="semibold">
+                    {detail.amount} {detail.currency}
+                  </Text>
+                )
+              })
+            }
+          </div>
         ),
         time: (
           <Text color="text-primary" size="body">
@@ -127,7 +128,7 @@ const StatusForm = () => {
         ),
         status: (
           <Text color="text-primary" size="body">
-            {history.statusStr || "-"}
+            {history.status || "-"}
           </Text>
         ),
       },

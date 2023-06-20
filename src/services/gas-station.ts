@@ -7,6 +7,7 @@ import { camelCaseKeys } from "@/utils";
 import { apiClient } from ".";
 import {swrFetcher} from "@/utils/swr";
 import {API_EXCHANGE_URL} from "@/configs";
+import queryString from 'query-string';
 
 const API_PATH = "";
 
@@ -51,3 +52,18 @@ export const makePackageOrder = async (data: any): Promise<any> => {
     error: 'Failed to generate nonce message',
   });
 }
+
+
+export const getHistoryMakeOrder = async (
+  params: any
+): Promise<IHistoryBuyTcResp[]> => {
+  const qs = '?' + queryString.stringify(params);
+  try {
+    return swrFetcher(`${API_EXCHANGE_URL}/package/order/list${qs}`, {
+      method: 'GET',
+      error: 'getHistoryMakeOrder',
+    });
+  } catch (err) {
+    throw err;
+  }
+};

@@ -10,6 +10,8 @@ export const MOCKUP_PASSWORD: string = ENVS.VITE_MOCKUP_PASSWORD || "";
 export const MOCKUP_MNEMONIC: string = ENVS.VITE_MOCKUP_MNEMONIC || "";
 export const isKeepSign: boolean = ENVS.VITE_KEEP_SIGNIN === "true";
 export const API_EXCHANGE_URL: string = ENVS.VITE_API_EXCHANGE_URL;
+export const TC_EXPLORER: string = ENVS.VITE_TC_EXPLORER;
+export const MEMPOOL_URL: string = ENVS.VITE_MEMPOOL_URL;
 
 export const CDN_URL_ICONS: string = CDN_URL + "/gasstion-icons";
 

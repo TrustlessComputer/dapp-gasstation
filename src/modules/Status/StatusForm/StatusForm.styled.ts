@@ -71,6 +71,12 @@ export const Container = styled.div`
         }
       }
     }
+
+    .receive-amount-list {
+      display: flex;
+      flex-direction: column;
+      gap: ${px2rem(4)};
+    }
   }
 `;
 

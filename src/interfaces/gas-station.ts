@@ -20,7 +20,8 @@ export interface IHistoryBuyTcResp {
   tcAddress: string;
   payType: string;
   paymentAmount: string;
-  receiveAddress: string;
+  paymentCurrency: string;
+  paymentAddress: string;
   tcAmount: string;
   txTcProcessBuy: string;
   txBtcProcessBuy: string;
@@ -29,4 +30,5 @@ export interface IHistoryBuyTcResp {
   expiredAt: string;
   createdAt: string;
   isConfirmed: boolean;
+  details: [];
 }
