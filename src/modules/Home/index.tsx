@@ -1,15 +1,14 @@
 import Text from "@/components/Text";
-import { IGenerateBuyTcAddressResp } from "@/interfaces/gas-station";
-import { MDContainer } from "@/modules/styled";
-import { generateBuyTcAddress } from "@/services/gas-station";
-import { getErrorMessage } from "@/utils/error";
-import React, { useCallback, useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import { FAQ } from "./FAQ";
-import { Container, Styled } from "./Home.styled";
+import {IGenerateBuyTcAddressResp} from "@/interfaces/gas-station";
+import {MDContainer} from "@/modules/styled";
+import {makePackageOrder} from "@/services/gas-station";
+import {getErrorMessage} from "@/utils/error";
+import React, {useCallback, useEffect, useState} from "react";
+import {toast} from "react-hot-toast";
+import {FAQ} from "./FAQ";
+import {Container, Styled} from "./Home.styled";
 import PaymentForm from "./PaymentForm";
-import { PayType } from "./PaymentForm/PaytypeDropdown";
-import SubmitForm from "./SubmitForm";
+import SubmitForm, {IPackage} from "./SubmitForm";
 
 declare global {
   interface Window {
@@ -62,19 +61,45 @@ const Home = () => {
   }, []);
 
   const onSubmitGenerate = async (
-    tcAddress: string,
-    tcAmount: number,
-    payType: PayType
+    payload: any
   ) => {
+    console.log('onSubmitGenerate', payload);
+    const {
+      toAddress,
+      toBTCAddress,
+      amountTC,
+      amountBTC,
+      amountWBTC,
+      payType,
+      isCustomPackage,
+      selectedPackage,
+      customPackage
+    } = payload;
     try {
       setIsProcessing(true);
-      const data = await generateBuyTcAddress({
-        tcAddress,
-        tcAmount,
-        payType,
-        "g-recaptcha-response": token,
-      });
-      setPaymentInfo(data);
+      const pkg: IPackage = isCustomPackage ? customPackage : selectedPackage;
+
+      const data: any = {
+        package_id: pkg?.id,
+        address: '',
+        payment_currency: payType?.toUpperCase(),
+        receiver_addresses: {
+          TC: toAddress,
+          BTC: toBTCAddress,
+          WBTC: toAddress,
+        },
+        is_custom: isCustomPackage,
+        custom_detail: {
+          TC: amountTC.toString(),
+          BTC: amountBTC.toString(),
+          WBTC: amountWBTC.toString(),
+        }
+      };
+
+      console.log('data', data);
+      const res = await makePackageOrder(data);
+
+      setPaymentInfo(res);
     } catch (err) {
       const { message } = getErrorMessage(err);
       toast.error(message);

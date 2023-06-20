@@ -34,8 +34,20 @@ export const getHistoryBuyTC = async (
 
 export const getPackageList = async (
 ) => {
-  return swrFetcher(`${API_EXCHANGE_URL}/package/list`, {
-    method: 'GET',
-    error: 'getPackageList',
-  });
+  try {
+    return swrFetcher(`${API_EXCHANGE_URL}/package/list`, {
+      method: 'GET',
+      error: 'getPackageList',
+    });
+  } catch (err) {
+    throw err;
+  }
 };
+
+export const makePackageOrder = async (data: any): Promise<any> => {
+  return swrFetcher(`${API_EXCHANGE_URL}/package/make-order`, {
+    method: 'POST',
+    data: data,
+    error: 'Failed to generate nonce message',
+  });
+}

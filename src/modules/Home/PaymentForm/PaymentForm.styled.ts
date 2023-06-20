@@ -41,5 +41,15 @@ export const Container = styled.form`
 
     background: #2e2e2e;
     border-radius: ${px2rem(20)};
+
+    strong {
+      color: #FFFFFF;
+    }
+  }
+  
+  .receive-address-list {
+    display: flex;
+    flex-direction: column;
+    gap: ${px2rem(12)};
   }
 `;

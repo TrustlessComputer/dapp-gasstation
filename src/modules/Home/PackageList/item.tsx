@@ -29,6 +29,11 @@ const PackageItemStyled = styled.div`
     
     color: #FFFFFFA0;
   }
+  
+  .package-fee {
+    font-size: ${px2rem(12)};
+    color: #FFE899;
+  }
 `;
 
 const PackageItem = (props: any) => {
@@ -40,11 +45,12 @@ const PackageItem = (props: any) => {
         {
           data?.details?.map((coin: any) => {
            return (
-             <div>{coin?.name} : {coin?.amount}</div>
+             <div>{coin?.currency} : {coin?.amount}</div>
            )
           })
         }
       </div>
+      <div className={"package-fee"}>Fee: {data?.fee} USD</div>
     </PackageItemStyled>
   )
 };

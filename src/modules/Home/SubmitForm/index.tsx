@@ -23,11 +23,7 @@ interface IFormValue {
 
 interface SubmitFormProps {
   isProcessing: boolean;
-  onSubmitGenerate: (
-    tcAddress: string,
-    tcAmount: number,
-    payType: PayType
-  ) => void;
+  onSubmitGenerate: (payload: any) => void;
 }
 
 const TC_ETH_PRICE = 0.0069;
@@ -106,12 +102,14 @@ const Form = (props: any) => {
   const [isCustomPackage, setIsCustomPackage] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<IPackage>();
   const [packages, setPackages] = useState<IPackage[]>([]);
+  const [customPackage, setCustomPackage] = useState<IPackage>();
 
-  console.log('packages', packages);
-  console.log('errors', errors);
-  console.log('values', values);
-  console.log('touched', touched);
-  console.log('====');
+  // console.log('account', account);
+  // console.log('packages', packages);
+  // console.log('errors', errors);
+  // console.log('values', values);
+  // console.log('touched', touched);
+  // console.log('====');
 
   useEffect(() => {
     getListPackages();
@@ -119,6 +117,11 @@ const Form = (props: any) => {
 
   const getListPackages = async () => {
     const res = await getPackageList();
+
+    const custom = res?.pop();
+    setCustomPackage(custom);
+    setFieldValue('customPackage', custom);
+
     setPackages(res);
     if(packages?.length > 1) {
       setSelectedPackage(packages[0]);
@@ -136,11 +139,11 @@ const Form = (props: any) => {
   useEffect(() => {
     if(selectedPackage) {
       // @ts-ignore
-      setFieldValue('amountTC', selectedPackage?.details[0]?.amount || 0, true);
+      setFieldValue('amountTC', selectedPackage?.details[0]?.amount || "0", true);
       // @ts-ignore
-      setFieldValue('amountBTC', selectedPackage?.details[1]?.amount || 0, true);
+      setFieldValue('amountBTC', selectedPackage?.details[1]?.amount || "0", true);
       // @ts-ignore
-      setFieldValue('amountWBTC', selectedPackage?.details[2]?.amount || 0, true);
+      setFieldValue('amountWBTC', selectedPackage?.details[2]?.amount || "0", true);
 
       setFieldValue('selectedPackage', selectedPackage, true);
     }
@@ -245,16 +248,16 @@ const Form = (props: any) => {
         }
       />
       {
-        isCustomPackage && selectedPackage?.id && selectedPackage?.id > 1 && (
+        selectedPackage?.id && selectedPackage?.id > 1 && (
           <Input
-            title="Receiving WTC Wallet Address"
+            title="Receiving BTC Wallet Address"
             type="text"
             name="toBTCAddress"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.toBTCAddress}
             className="input"
-            placeholder={`Paste your WTC wallet address here.`}
+            placeholder={`Paste your BTC wallet address here.`}
             errorMsg={
               errors.toBTCAddress && touched.toBTCAddress
                 ? errors.toBTCAddress
@@ -300,11 +303,11 @@ const SubmitForm = (props: SubmitFormProps) => {
       errors.toAddress = "Invalid receiving TC wallet address.";
     }
 
-    if(values?.isCustomPackage && values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
+    if(values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
       if (!values.toBTCAddress) {
-        errors.toBTCAddress = "Receiving WTC wallet address is required.";
+        errors.toBTCAddress = "Receiving BTC wallet address is required.";
       } else if (!validateBTCAddressTaproot(values.toBTCAddress)) {
-        errors.toBTCAddress = "Invalid receiving WTC wallet address.";
+        errors.toBTCAddress = "Invalid receiving BTC wallet address.";
       }
     }
 
@@ -319,9 +322,9 @@ const SubmitForm = (props: SubmitFormProps) => {
       if(values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
         if (!values.amountBTC) {
           errors.amountBTC = "Amount is required.";
-        } else if (Number(values.amountBTC) < 0.001 || Number(values.amountBTC) > 100) {
+        } else if (Number(values.amountBTC) < 0.0000001 || Number(values.amountBTC) > 1) {
           errors.amountBTC =
-            "The minimum amount is 0.001 BTC. The maximum amount is 1 BTC.";
+            "The minimum amount is 0.0000001 BTC. The maximum amount is 1 BTC.";
         }
       }
 
@@ -340,7 +343,7 @@ const SubmitForm = (props: SubmitFormProps) => {
   };
 
   const handleSubmit = async (payload: IFormValue): Promise<void> => {
-    onSubmitGenerate(payload.toAddress, Number(payload.amountTC), payload.payType);
+    onSubmitGenerate(payload);
   };
 
   return (

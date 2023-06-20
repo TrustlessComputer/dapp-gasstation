@@ -34,25 +34,25 @@ const PaymentForm = (props: PaymentFormProps) => {
   return (
     <Container>
       <Text size="h6" fontWeight="medium">
-        Send <span>{formatAmount} </span> to this payment address
+        Send <span>{paymentInfo.paymentAmount} {paymentInfo.paymentCurrency}</span> to this payment address
       </Text>
       <div className="wrap-qr">
         <QRCodeGenerator
           bgColor="#FFFFFF"
           size={200}
-          value={paymentInfo.address || ""}
+          value={paymentInfo.paymentAddress || ""}
         />
       </div>
 
       <div className="expire-info">
         <div className="copy-container">
           <Text color="text-third" size="body-large">
-            {paymentInfo.address || ""}
+            {paymentInfo.paymentAddress || ""}
           </Text>
           <IconSVG
             src={`${CDN_URL_ICONS}/ic-copy.svg`}
             maxWidth="24"
-            onClick={() => onClickCopy(paymentInfo.address || "")}
+            onClick={() => onClickCopy(paymentInfo.paymentAddress || "")}
             className="icon-copy"
           />
         </div>
@@ -61,10 +61,21 @@ const PaymentForm = (props: PaymentFormProps) => {
         </Text>
       </div>
 
-      <div className="wrap-receive-address">
-        <Text color="text-five" size="body-large">
-          Receiving TC wallet address: <br></br> {paymentInfo.tcAddress || ""}
-        </Text>
+      <div className={"receive-address-list"}>
+        {
+          paymentInfo?.details?.map((detail: any) => {
+            return (
+              <div className="wrap-receive-address">
+                <Text color="text-five" size="body-large">
+                  Receiving {detail.currency} wallet address: <br></br> <strong>{detail.receiverAddress || ""}</strong>
+                </Text>
+                <Text color="text-five" size="body-large">
+                  Amount: <br></br> <strong>{detail.amount || "0"} {detail.currency}</strong>
+                </Text>
+              </div>
+            )
+          })
+        }
       </div>
     </Container>
   );

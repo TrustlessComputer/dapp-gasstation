@@ -7,10 +7,12 @@ export interface IGenerateBuyTcAddressPayload {
 
 export interface IGenerateBuyTcAddressResp {
   tcAddress: string;
-  address: string;
+  paymentAddress: string;
   paymentAmount: string;
+  paymentCurrency: string;
   expiredAt: string;
   payType: string;
+  details: [];
 }
 
 export interface IHistoryBuyTcResp {
