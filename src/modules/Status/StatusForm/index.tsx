@@ -10,7 +10,7 @@ import {getHistoryMakeOrder} from "@/services/gas-station";
 import Table from "@/components/Table";
 import {formatDateTime} from "@/utils/time";
 import IconSVG from "@/components/IconSVG";
-import {CDN_URL, CDN_URL_ICONS, MEMPOOL_URL, TC_EXPLORER} from "@/configs";
+import {CDN_URL_ICONS, MEMPOOL_URL, TC_EXPLORER} from "@/configs";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 
@@ -117,7 +117,7 @@ const StatusForm = () => {
                 return (
                   <Text color="text-primary" size="body" fontWeight="semibold">
                     {detail.amount} {detail.currency} {" "}
-                    <img className="ic-copy" src={`${CDN_URL}/icons/ic-share-white.svg`} onClick={() => window.open(url, "_blank")} style={{width: '16px', marginTop: '-3px', cursor: 'pointer'}}/>
+                    <img className="ic-copy" src={`${CDN_URL_ICONS}/ic-share-white.svg`} onClick={() => window.open(url, "_blank")} style={{width: '16px', marginTop: '-3px', cursor: 'pointer'}}/>
                   </Text>
                 )
               })
