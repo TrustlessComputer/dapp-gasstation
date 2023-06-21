@@ -9,6 +9,7 @@ import Text from "@/components/Text";
 import { ceilPrecised } from "@/utils/format";
 import PackageList from "@/modules/Home/PackageList";
 import {getPackageList} from "@/services/gas-station";
+import px2rem from "@/utils/px2rem";
 
 interface IFormValue {
   amountTC: string;
@@ -39,6 +40,7 @@ export interface IPackage {
   id?: number;
   title?: string;
   details?: ICoin[];
+  fee: string;
 }
 
 // const PACKAGES: Array<IPackage> = [
@@ -159,7 +161,10 @@ const Form = (props: any) => {
       <PaytypeDropdown payType={payType} setPayType={setPayType} />
       <div>
         <PackageList data={packages} onSelect={handleSelectPackage}/>
-        <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom amount</Text>
+        <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(8)}`}}>
+          <Text>Fee: {selectedPackage?.fee} USD</Text>
+          <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom amount</Text>
+        </div>
       </div>
       {
         isCustomPackage && (
@@ -322,18 +327,18 @@ const SubmitForm = (props: SubmitFormProps) => {
       if(values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
         if (!values.amountBTC) {
           errors.amountBTC = "Amount is required.";
-        } else if (Number(values.amountBTC) < 0.0000001 || Number(values.amountBTC) > 1) {
+        } else if (Number(values.amountBTC) < 0.0004 || Number(values.amountBTC) > 1) {
           errors.amountBTC =
-            "The minimum amount is 0.0000001 BTC. The maximum amount is 1 BTC.";
+            "The minimum amount is 0.0004 BTC. The maximum amount is 1 BTC.";
         }
       }
 
       if(values?.selectedPackage?.id && values?.selectedPackage?.id > 2) {
         if (!values.amountWBTC) {
           errors.amountWBTC = "Amount is required.";
-        } else if (Number(values.amountWBTC) < 0.001 || Number(values.amountWBTC) > 1) {
+        } else if (Number(values.amountWBTC) < 0.0004 || Number(values.amountWBTC) > 1) {
           errors.amountWBTC =
-            "The minimum amount is 0.001 WBTC. The maximum amount is 1 WBTC.";
+            "The minimum amount is 0.0004 WBTC. The maximum amount is 1 WBTC.";
         }
       }
 

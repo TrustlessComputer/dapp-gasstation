@@ -1,24 +1,25 @@
 import styled from "styled-components";
 import px2rem from "@/utils/px2rem";
-import amount from "@/utils/amount";
 
 const PackageItemStyled = styled.div`
   border: 1px solid #CECECE;
   border-radius: 8px;
   padding: ${px2rem(16)};
   cursor: pointer;
+  color: #FFFFFFA0;
   
   &.isSelected {
     background-color: #000000;
+    color: #FFFFFF;
     
-    .package-coins {
-      color: #FFFFFF;
-    }
+    //.package-coins {
+    //  color: #FFFFFF;
+    //}
   }
   
   .package-title {
     font-size: ${px2rem(14)};
-    color: #CECECE;
+    //color: #CECECE;
     text-align: center;
   }
   
@@ -27,12 +28,17 @@ const PackageItemStyled = styled.div`
     flex-direction: column;
     gap: 8px;
     
-    color: #FFFFFFA0;
+    //color: #FFFFFFA0;
   }
   
   .package-fee {
     font-size: ${px2rem(12)};
     color: #FFE899;
+  }
+  
+  .package-desc {
+    font-size: ${px2rem(12)};
+    //color: #FFFFFFA0;
   }
 `;
 
@@ -50,7 +56,8 @@ const PackageItem = (props: any) => {
           })
         }
       </div>
-      <div className={"package-fee"}>Fee: {data?.fee} USD</div>
+      {/*<div className={"package-desc"}>{data?.description}</div>*/}
+      <div className={"package-desc"}>{"This amount is enough for 10 transactions"}</div>
     </PackageItemStyled>
   )
 };

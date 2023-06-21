@@ -19,8 +19,6 @@ export const FormContainer = styled.form`
     text-decoration: underline;
     color: #B1E3FF;
     cursor: pointer;
-    text-align: right;
-    margin-top: ${px2rem(8)};
   }
   
   .list-inputs {
