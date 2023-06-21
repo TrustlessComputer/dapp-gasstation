@@ -10,7 +10,7 @@ import {getHistoryMakeOrder} from "@/services/gas-station";
 import Table from "@/components/Table";
 import {formatDateTime} from "@/utils/time";
 import IconSVG from "@/components/IconSVG";
-import {CDN_URL_ICONS} from "@/configs";
+import {CDN_URL, CDN_URL_ICONS, MEMPOOL_URL, TC_EXPLORER} from "@/configs";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 
@@ -78,7 +78,7 @@ const StatusForm = () => {
         // ),
 
         depositAmount: (
-          <div className="depositAddress">
+          <div className="depositAddress" style={{justifyContent: 'flex-start'}}>
             <Text color="text-primary" size="body" fontWeight="semibold">
               {history?.paymentAmount} {" "}
               {history?.paymentCurrency}
@@ -110,9 +110,14 @@ const StatusForm = () => {
           <div className={"receive-amount-list"}>
             {
               history?.details?.map((detail: any) => {
+                let url = `${TC_EXPLORER}/tx/${detail.txHash}`;
+                if(detail.currency === 'BTC') {
+                  url = `${MEMPOOL_URL}/tx/${detail.txHash}`;
+                }
                 return (
                   <Text color="text-primary" size="body" fontWeight="semibold">
-                    {detail.amount} {detail.currency}
+                    {detail.amount} {detail.currency} {" "}
+                    <img className="ic-copy" src={`${CDN_URL}/icons/ic-share-white.svg`} onClick={() => window.open(url, "_blank")} style={{width: '16px', marginTop: '-3px', cursor: 'pointer'}}/>
                   </Text>
                 )
               })
