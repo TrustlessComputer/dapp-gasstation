@@ -11,7 +11,7 @@ const PayTypeItemStyled = styled.div`
   display: flex;
   align-items: center;
   gap: ${px2rem(8)};
-  padding: ${px2rem(16)};
+  padding: ${px2rem(16)} 0;
   cursor: pointer;
   color: #FFFFFF;
   
