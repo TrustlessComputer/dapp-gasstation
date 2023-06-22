@@ -1,5 +1,5 @@
 import Text from "@/components/Text";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {PaytypeListStyled} from "./styled";
 import PayTypeItem from "@/modules/Home/PaymentForm/PaytypeList/item";
 
@@ -27,13 +27,19 @@ export const ListPayType: Array<IPayType> = [
   },
 ];
 
-interface Props {
-  payType: PayType;
-  setPayType: (type: PayType) => void;
-}
-
-const PaytypeList = React.memo((props: Props) => {
+const PaytypeList = React.memo((props: any) => {
+  const { data, onSelect } = props;
   const [selectedItem, setSelectedItem] = useState<IPayType>();
+
+  useEffect(() => {
+    if(data?.length > 0) {
+      setSelectedItem(data[0]);
+    }
+  }, [JSON.stringify(data)]);
+
+  useEffect(() => {
+    onSelect && onSelect(selectedItem);
+  }, [JSON.stringify(selectedItem)])
 
   return (
     <PaytypeListStyled>
@@ -48,52 +54,13 @@ const PaytypeList = React.memo((props: Props) => {
       </Text>
       <div className={"package-content"}>
         {
-          ListPayType.map((p, index) => {
+          data.map((p: any) => {
             return (
               <PayTypeItem key={p.value} data={p} onClick={() => setSelectedItem(p)} isSelected={selectedItem?.value === p.value}/>
             )
           })
         }
       </div>
-      {/*<Dropdown
-        element={
-          <Text color="text-primary" fontWeight="medium" size="body">
-            {props.payType.toUpperCase()}
-          </Text>
-        }
-        type="click"
-        icon={
-          <IconSVG
-            src={`${CDN_URL_ICONS}/ic-${props.payType}.svg`}
-            maxWidth="28"
-          />
-        }
-        ref={dropdownRef}
-      >
-        <DropdownList>
-          {ListPayType.map((item, index) => (
-            <DropdownItem
-              key={index.toString()}
-              onClick={() => {
-                dropdownRef.current.onToggle();
-                props.setPayType(item.value);
-              }}
-            >
-              <div className="item">
-                <IconSVG src={`${CDN_URL_ICONS}/${item.icon}`} maxWidth="28" />
-                <div>
-                  <Text color="text-primary" fontWeight="medium" size="body">
-                    {item.value.toUpperCase()}
-                  </Text>
-                  <Text color="#A1A8B8" fontWeight="regular" size="body">
-                    {item.name}
-                  </Text>
-                </div>
-              </div>
-            </DropdownItem>
-          ))}
-        </DropdownList>
-      </Dropdown>*/}
     </PaytypeListStyled>
   );
 });

@@ -28,6 +28,7 @@ const Container = styled(LayoutPadding)`
   flex-direction: column;
   padding-top: ${px2rem(32)};
   padding-bottom: ${px2rem(32)};
+  background-color: ${({ theme }) => theme.bg.secondary};
 `;
 
 const ContentWrapper = styled.div`

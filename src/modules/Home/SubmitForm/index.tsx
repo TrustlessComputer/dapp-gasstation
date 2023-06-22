@@ -10,7 +10,7 @@ import { ceilPrecised } from "@/utils/format";
 import PackageList from "@/modules/Home/PackageList";
 import {getPackageList} from "@/services/gas-station";
 import px2rem from "@/utils/px2rem";
-import PaytypeList from "../PaymentForm/PaytypeList";
+import PaytypeList, {IPayType, ListPayType} from "../PaymentForm/PaytypeList";
 
 interface IFormValue {
   amountTC: string;
@@ -101,7 +101,7 @@ const Form = (props: any) => {
   } = props;
 
   const { isProcessing } = props;
-  const [payType, setPayType] = useState(PayType.eth);
+  const [payType, setPayType] = useState<IPayType>();
   const [isCustomPackage, setIsCustomPackage] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<IPackage>();
   const [packages, setPackages] = useState<IPackage[]>([]);
@@ -156,10 +156,14 @@ const Form = (props: any) => {
     setSelectedPackage(p);
   }
 
+  const handleSelectPaytype = (pt: any) => {
+    setPayType(pt);
+  }
+
   // @ts-ignore
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <PaytypeList payType={payType} setPayType={setPayType} />
+      <PaytypeList data={ListPayType} onSelect={handleSelectPaytype} />
       <div>
         <PackageList data={packages} onSelect={handleSelectPackage}/>
         <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(8)}`}}>
