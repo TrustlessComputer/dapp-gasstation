@@ -88,7 +88,7 @@ export const FormContainer = styled.form`
   margin-top: ${px2rem(60)};
 
   .confirm-btn {
-    margin-top: ${px2rem(26)};
+    //margin-top: ${px2rem(26)};
     height: ${px2rem(48)};
   }
 `;

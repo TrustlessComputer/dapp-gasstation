@@ -79,7 +79,7 @@ const StatusForm = () => {
 
         depositAmount: (
           <div className="depositAddress" style={{justifyContent: 'flex-start'}}>
-            <Text color="text-primary" size="body" fontWeight="semibold">
+            <Text color="text-primary" size="body-large" fontWeight="medium">
               {history?.paymentAmount} {" "}
               {history?.paymentCurrency}
             </Text>
@@ -94,7 +94,7 @@ const StatusForm = () => {
         ),
         depositAddress: (
           <div className="depositAddress">
-            <Text color="text-primary" size="body">
+            <Text color="text-primary" size="body-large" fontWeight="medium">
               {formatLongAddress(history.paymentAddress)}
             </Text>
             <IconSVG
@@ -115,7 +115,7 @@ const StatusForm = () => {
                   url = `${MEMPOOL_URL}/tx/${detail.txHash}`;
                 }
                 return (
-                  <Text color="text-primary" size="body" fontWeight="semibold">
+                  <Text color="text-primary" size="body-large" fontWeight="medium">
                     {detail.amount} {detail.currency} {" "}
                     <img className="ic-copy" src={`${CDN_URL_ICONS}/ic-share-white.svg`} onClick={() => window.open(url, "_blank")} style={{width: '16px', marginTop: '-3px', cursor: 'pointer'}}/>
                   </Text>
@@ -125,14 +125,14 @@ const StatusForm = () => {
           </div>
         ),
         time: (
-          <Text color="text-primary" size="body">
+          <Text color="text-primary" size="body-large" fontWeight="medium">
             {formatDateTime({
               dateTime: new Date(history.createdAt).getTime(),
             })}
           </Text>
         ),
         status: (
-          <Text color="text-primary" size="body">
+          <Text color="text-primary" size="body-large" fontWeight="medium" style={{textTransform: 'capitalize'}}>
             {history.status || "-"}
           </Text>
         ),
@@ -142,7 +142,7 @@ const StatusForm = () => {
 
   return (
     <Container>
-      <Text className="title" size="h2">
+      <Text className="title" size="h2" fontWeight={"medium"}>
         Check status
       </Text>
       <Formik
@@ -163,7 +163,7 @@ const StatusForm = () => {
         }) => (
           <FormContainer onSubmit={handleSubmit}>
             <Input
-              title="TC Wallet Address"
+              // title="TC Wallet Address"
               id="address"
               type="text"
               name="address"
