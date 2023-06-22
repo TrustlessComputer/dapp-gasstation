@@ -1,16 +1,20 @@
-import IconSVG from "@/components/IconSVG";
-import Dropdown, { IDropdownRef } from "@/components/Popover";
 import Text from "@/components/Text";
-import { CDN_URL_ICONS } from "@/configs";
-import React from "react";
-import { DropdownItem, DropdownList } from "./styled";
+import React, {useState} from "react";
+import {PaytypeListStyled} from "./styled";
+import PayTypeItem from "@/modules/Home/PaymentForm/PaytypeList/item";
 
 export enum PayType {
   eth = "eth",
   btc = "btc",
+};
+
+export interface IPayType {
+  icon: string;
+  value: string,
+  name: string;
 }
 
-export const ListPayType = [
+export const ListPayType: Array<IPayType> = [
   {
     icon: "ic-eth.svg",
     value: PayType.eth,
@@ -28,13 +32,11 @@ interface Props {
   setPayType: (type: PayType) => void;
 }
 
-const PaytypeDropdown = React.memo((props: Props) => {
-  const dropdownRef = React.useRef<IDropdownRef>({
-    onToggle: () => undefined,
-  });
+const PaytypeList = React.memo((props: Props) => {
+  const [selectedItem, setSelectedItem] = useState<IPayType>();
 
   return (
-    <div>
+    <PaytypeListStyled>
       <Text
         style={{ textTransform: "uppercase" }}
         size="tini"
@@ -44,7 +46,16 @@ const PaytypeDropdown = React.memo((props: Props) => {
       >
         Payment currency
       </Text>
-      <Dropdown
+      <div className={"package-content"}>
+        {
+          ListPayType.map((p, index) => {
+            return (
+              <PayTypeItem key={p.value} data={p} onClick={() => setSelectedItem(p)} isSelected={selectedItem?.value === p.value}/>
+            )
+          })
+        }
+      </div>
+      {/*<Dropdown
         element={
           <Text color="text-primary" fontWeight="medium" size="body">
             {props.payType.toUpperCase()}
@@ -71,17 +82,20 @@ const PaytypeDropdown = React.memo((props: Props) => {
               <div className="item">
                 <IconSVG src={`${CDN_URL_ICONS}/${item.icon}`} maxWidth="28" />
                 <div>
-                  <Text color="text-primary" fontWeight="medium" size="note">
+                  <Text color="text-primary" fontWeight="medium" size="body">
                     {item.value.toUpperCase()}
+                  </Text>
+                  <Text color="#A1A8B8" fontWeight="regular" size="body">
+                    {item.name}
                   </Text>
                 </div>
               </div>
             </DropdownItem>
           ))}
         </DropdownList>
-      </Dropdown>
-    </div>
+      </Dropdown>*/}
+    </PaytypeListStyled>
   );
 });
 
-export default PaytypeDropdown;
+export default PaytypeList;

@@ -8,7 +8,7 @@ type TText = {
   style?: CSSProperties;
   size?: 'tini' | 'note' | 'body' | 'body-large' | 'h6' | 'h5' | 'h4' | 'h3' | 'h2' | 'h1' | 'd3' | 'd2' | 'd1';
   align?: 'center' | 'left' | 'right' | 'unset';
-  color?: keyof ColorsTheme;
+  color?: keyof ColorsTheme | string;
   className?: string;
   maxWidth?: CSSProperties['maxWidth'];
   onClick?: () => void;

@@ -10,6 +10,7 @@ import { ceilPrecised } from "@/utils/format";
 import PackageList from "@/modules/Home/PackageList";
 import {getPackageList} from "@/services/gas-station";
 import px2rem from "@/utils/px2rem";
+import PaytypeList from "../PaymentForm/PaytypeList";
 
 interface IFormValue {
   amountTC: string;
@@ -158,7 +159,7 @@ const Form = (props: any) => {
   // @ts-ignore
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <PaytypeDropdown payType={payType} setPayType={setPayType} />
+      <PaytypeList payType={payType} setPayType={setPayType} />
       <div>
         <PackageList data={packages} onSelect={handleSelectPackage}/>
         <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(8)}`}}>
@@ -278,7 +279,7 @@ const Form = (props: any) => {
         type="submit"
         className="confirm-btn"
       >
-        {isProcessing ? "Processing..." : "Get TC"}
+        {isProcessing ? "Processing..." : `Get ${selectedPackage?.id && selectedPackage?.id > 1 ? 'them' : 'it'} TC`}
       </Button>
 
       <Text className="claimer">
