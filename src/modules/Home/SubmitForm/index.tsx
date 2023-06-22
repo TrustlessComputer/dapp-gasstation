@@ -129,7 +129,7 @@ const Form = (props: any) => {
           justifyContent: 'space-between',
           alignItems: "center",
           marginTop: `${px2rem(8)}`,
-          marginBottom: `${px2rem(8)}`
+          marginBottom: `${px2rem(16)}`
         }}>
           {
             !isCustomPackage && (
@@ -151,7 +151,7 @@ const Form = (props: any) => {
           >{isCustomPackage ? 'Buying packs' : 'Custom amount'}</Text>
         </div>
         {!isCustomPackage && <PackageList value={selectedPackage} data={packages} onSelect={handleSelectPackage}/>}
-        <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(8)}`}}>
+        <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(18)}`}}>
           <Text>Fee:</Text>
           <Text>{selectedPackage?.fee} USD</Text>
         </div>
