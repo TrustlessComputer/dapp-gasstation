@@ -3,7 +3,6 @@ import { Input } from "@/components/Inputs";
 import {validateBTCAddressTaproot, validateWalletAddress} from "@/utils";
 import { Formik } from "formik";
 import React, {useEffect, useState} from "react";
-import PaytypeDropdown, { PayType } from "../PaymentForm/PaytypeDropdown";
 import { FormContainer } from "./SubmitForm.styled";
 import Text from "@/components/Text";
 import { ceilPrecised } from "@/utils/format";
@@ -44,51 +43,6 @@ export interface IPackage {
   fee: string;
 }
 
-// const PACKAGES: Array<IPackage> = [
-//   {
-//     id: 1,
-//     title: 'Package 1',
-//     coins: [
-//       {
-//         currency: 'TC',
-//         amount: 100
-//       }
-//     ]
-//   },
-//   {
-//     id: 2,
-//     title: 'Package 2',
-//     coins: [
-//       {
-//         currency: 'TC',
-//         amount: 100
-//       },
-//       {
-//         currency: 'BTC',
-//         amount: 0.005
-//       },
-//     ]
-//   },
-//   {
-//     id: 3,
-//     title: 'Package 3',
-//     coins: [
-//       {
-//         currency: 'TC',
-//         amount: 100
-//       },
-//       {
-//         currency: 'BTC',
-//         amount: 0.005
-//       },
-//       {
-//         currency: 'WBTC',
-//         amount: 0.005
-//       },
-//     ]
-//   },
-// ];
-
 const Form = (props: any) => {
   const {
     values,
@@ -125,9 +79,14 @@ const Form = (props: any) => {
     setCustomPackage(custom);
     setFieldValue('customPackage', custom);
 
-    setPackages(res);
-    if(packages?.length > 1) {
-      setSelectedPackage(packages[0]);
+    if(res?.length > 0) {
+      const silverPack = res[0];
+      const goldPack = res[1];
+      const diamondPack = res[2];
+
+      setPackages([silverPack, diamondPack, goldPack]);
+
+      setSelectedPackage(diamondPack);
     }
   }
 
@@ -165,10 +124,36 @@ const Form = (props: any) => {
     <FormContainer onSubmit={handleSubmit}>
       <PaytypeList data={ListPayType} onSelect={handleSelectPaytype} />
       <div>
-        <PackageList data={packages} onSelect={handleSelectPackage}/>
+        <div style={{
+          display: "flex",
+          justifyContent: 'space-between',
+          alignItems: "center",
+          marginTop: `${px2rem(8)}`,
+          marginBottom: `${px2rem(8)}`
+        }}>
+          {
+            !isCustomPackage && (
+              <Text
+                style={{ textTransform: "uppercase" }}
+                size="tini"
+                fontWeight="medium"
+                color="text-secondary"
+              >
+                Packages
+              </Text>
+            )
+          }
+          <Text
+            size={"tini"}
+            fontWeight={"regular"}
+            className={"custom-text"}
+            onClick={() => setIsCustomPackage(!isCustomPackage)}
+          >{isCustomPackage ? 'Buying packs' : 'Custom amount'}</Text>
+        </div>
+        {!isCustomPackage && <PackageList value={selectedPackage} data={packages} onSelect={handleSelectPackage}/>}
         <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(8)}`}}>
-          <Text>Fee: {selectedPackage?.fee} USD</Text>
-          <Text className={"custom-text"} onClick={() => setIsCustomPackage(!isCustomPackage)}>Custom amount</Text>
+          <Text>Fee:</Text>
+          <Text>{selectedPackage?.fee} USD</Text>
         </div>
       </div>
       {

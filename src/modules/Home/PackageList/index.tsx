@@ -1,18 +1,17 @@
 import {PackageListStyled} from "@/modules/Home/PackageList/PackageList.styled";
-import Text from "@/components/Text";
 import React, {useEffect, useState} from "react";
 import PackageItem from "@/modules/Home/PackageList/item";
 import {IPackage} from "@/modules/Home/SubmitForm";
 
 const PackageList = (props: any) => {
-  const { data, onSelect } = props;
+  const { data, onSelect, value } = props;
   const [selectedItem, setSelectedItem] = useState<IPackage>();
 
   useEffect(() => {
-    if(data?.length > 0) {
-      setSelectedItem(data[0]);
+    if(value) {
+      setSelectedItem(value);
     }
-  }, [JSON.stringify(data)]);
+  }, [value]);
 
   useEffect(() => {
     onSelect && onSelect(selectedItem);
@@ -20,7 +19,7 @@ const PackageList = (props: any) => {
 
   return (
     <PackageListStyled>
-      <Text
+      {/*<Text
         style={{ textTransform: "uppercase" }}
         size="tini"
         fontWeight="medium"
@@ -28,7 +27,7 @@ const PackageList = (props: any) => {
         className="mb-8"
       >
         Packages
-      </Text>
+      </Text>*/}
       <div className={"package-content"}>
         {
           data?.map((p: any) => {

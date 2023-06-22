@@ -33,8 +33,8 @@ const PaymentForm = (props: PaymentFormProps) => {
 
   return (
     <Container>
-      <Text size="h6" fontWeight="medium">
-        Send <span>{paymentInfo.paymentAmount} {paymentInfo.paymentCurrency}</span> to this payment address
+      <Text size="h6" fontWeight="regular">
+        Send <strong>{paymentInfo.paymentAmount} {paymentInfo.paymentCurrency}</strong> to this payment address
       </Text>
       <div className="wrap-qr">
         <QRCodeGenerator
@@ -46,7 +46,7 @@ const PaymentForm = (props: PaymentFormProps) => {
 
       <div className="expire-info">
         <div className="copy-container">
-          <Text color="text-third" size="body-large">
+          <Text color="text-third" size="note" fontWeight={"medium"}>
             {paymentInfo.paymentAddress || ""}
           </Text>
           <IconSVG
@@ -56,7 +56,7 @@ const PaymentForm = (props: PaymentFormProps) => {
             className="icon-copy"
           />
         </div>
-        <Text className="mt-12" size="body-large">
+        <Text className="mt-12" size="body" fontWeight={"regular"}>
           Expires at: {formatDateTime({ dateTime: paymentInfo.expiredAt })}
         </Text>
       </div>
@@ -66,10 +66,10 @@ const PaymentForm = (props: PaymentFormProps) => {
           paymentInfo?.details?.map((detail: any) => {
             return (
               <div className="wrap-receive-address">
-                <Text color="text-five" size="body-large">
+                <Text color="text-five" size="note">
                   Receiving {detail.currency} wallet address: <br></br> <strong>{detail.receiverAddress || ""}</strong>
                 </Text>
-                <Text color="text-five" size="body-large">
+                <Text color="text-five" size="note">
                   Amount: <br></br> <strong>{detail.amount || "0"} {detail.currency}</strong>
                 </Text>
               </div>

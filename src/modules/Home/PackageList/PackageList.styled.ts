@@ -6,10 +6,12 @@ export const PackageListStyled = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     gap: ${px2rem(24)};
     
     > div {
       flex: 1;
+      height: fit-content;
     }
   }
 `;

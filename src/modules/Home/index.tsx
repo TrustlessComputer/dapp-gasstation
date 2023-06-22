@@ -82,7 +82,7 @@ const Home = () => {
       const data: any = {
         package_id: pkg?.id,
         address: '',
-        payment_currency: payType?.toUpperCase(),
+        payment_currency: payType?.value?.toUpperCase(),
         receiver_addresses: {
           TC: toAddress,
           BTC: toBTCAddress,
