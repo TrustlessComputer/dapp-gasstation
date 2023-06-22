@@ -32,8 +32,8 @@ const PackageItemStyled = styled.div`
   .ic-check-circle {
     display: none;
     position: absolute;
-    top: -${px2rem(10)};
-    right: -${px2rem(10)};
+    top: -${px2rem(8)};
+    right: -${px2rem(8)};
   }
   
   .package-header {
