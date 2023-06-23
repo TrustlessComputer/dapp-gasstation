@@ -117,7 +117,7 @@ const StatusForm = () => {
                 return (
                   <Text color="text-primary" size="body-large" fontWeight="medium">
                     {detail.amount} {detail.currency} {" "}
-                    <img className="ic-copy" src={`${CDN_URL_ICONS}/ic-share-white.svg`} onClick={() => window.open(url, "_blank")} style={{width: '16px', marginTop: '-3px', cursor: 'pointer'}}/>
+                    {detail.txHash && <img className="ic-copy" src={`${CDN_URL_ICONS}/ic-share-white.svg`} onClick={() => window.open(url, "_blank")} style={{width: '16px', marginTop: '-3px', cursor: 'pointer'}}/>}
                   </Text>
                 )
               })
