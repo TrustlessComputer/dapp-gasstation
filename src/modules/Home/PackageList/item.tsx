@@ -100,7 +100,7 @@ const PackageItem = (props: any) => {
         />
         <div>
           <div className={"package-title"}>{data.name}</div>
-          <div className={"package-title-short"}>{data.name}</div>
+          <div className={"package-title-short"}>{data.shortDescription}</div>
         </div>
       </div>
 
@@ -120,8 +120,8 @@ const PackageItem = (props: any) => {
           })
         }
       </div>
-      {/*<div className={"package-desc"}>{data?.description}</div>*/}
-      <div className={"package-desc"}>{"This amount is enough for 10 transactions"}</div>
+      <div className={"package-desc"}>{data?.description}</div>
+      {/*<div className={"package-desc"}>{"This amount is enough for 10 transactions"}</div>*/}
     </PackageItemStyled>
   )
 };

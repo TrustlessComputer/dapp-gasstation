@@ -175,7 +175,7 @@ const Form = (props: any) => {
               //     } )`
               //     : ""
               // }`}
-              title={"Amount TC"}
+              title={"How many TC would you like to receive?"}
               // id="amount"
               type="number"
               name="amountTC"
@@ -183,7 +183,7 @@ const Form = (props: any) => {
               onBlur={handleBlur}
               value={values.amountTC}
               className="input"
-              placeholder={`Amount TC`}
+              placeholder={`Amount`}
               errorMsg={
                 errors.amountTC && touched.amountTC ? errors.amountTC : undefined
               }
@@ -191,7 +191,7 @@ const Form = (props: any) => {
             {
               selectedPackage?.id && selectedPackage?.id > 1 && (
                 <Input
-                  title={"Amount BTC"}
+                  title={"How many BTC would you like to receive?"}
                   // id="amount"
                   type="number"
                   name="amountBTC"
@@ -199,7 +199,7 @@ const Form = (props: any) => {
                   onBlur={handleBlur}
                   value={values.amountBTC}
                   className="input"
-                  placeholder={`Amount BTC`}
+                  placeholder={`Amount`}
                   errorMsg={
                     errors.amountBTC && touched.amountBTC ? errors.amountBTC : undefined
                   }
@@ -209,7 +209,7 @@ const Form = (props: any) => {
             {
               selectedPackage?.id && selectedPackage?.id > 2 && (
                 <Input
-                  title={"Amount WBTC"}
+                  title={"How many WBTC would you like to receive?"}
                   // id="amount"
                   type="number"
                   name="amountWBTC"
@@ -217,7 +217,7 @@ const Form = (props: any) => {
                   onBlur={handleBlur}
                   value={values.amountWBTC}
                   className="input"
-                  placeholder={`Amount WBTC`}
+                  placeholder={`Amount`}
                   errorMsg={
                     errors.amountWBTC && touched.amountWBTC ? errors.amountWBTC : undefined
                   }
@@ -317,18 +317,18 @@ const SubmitForm = (props: SubmitFormProps) => {
       if(values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
         if (!values.amountBTC) {
           errors.amountBTC = "Amount is required.";
-        } else if (Number(values.amountBTC) < 0.0004 || Number(values.amountBTC) > 1) {
+        } else if (Number(values.amountBTC) < 0.001 || Number(values.amountBTC) > 1) {
           errors.amountBTC =
-            "The minimum amount is 0.0004 BTC. The maximum amount is 1 BTC.";
+            "The minimum amount is 0.001 BTC. The maximum amount is 1 BTC.";
         }
       }
 
       if(values?.selectedPackage?.id && values?.selectedPackage?.id > 2) {
         if (!values.amountWBTC) {
           errors.amountWBTC = "Amount is required.";
-        } else if (Number(values.amountWBTC) < 0.0004 || Number(values.amountWBTC) > 1) {
+        } else if (Number(values.amountWBTC) < 0.001 || Number(values.amountWBTC) > 1) {
           errors.amountWBTC =
-            "The minimum amount is 0.0004 WBTC. The maximum amount is 1 WBTC.";
+            "The minimum amount is 0.001 WBTC. The maximum amount is 1 WBTC.";
         }
       }
 
