@@ -8,7 +8,7 @@ export const FormContainer = styled.form`
   gap: ${px2rem(24)};
 
   .confirm-btn {
-    margin-top: ${px2rem(32)};
+    margin-top: ${px2rem(24)};
   }
 
   .claimer {

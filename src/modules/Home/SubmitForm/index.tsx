@@ -151,10 +151,6 @@ const Form = (props: any) => {
           >{isCustomPackage ? 'Buying packs' : 'Custom amount'}</Text>
         </div>
         {!isCustomPackage && <PackageList value={selectedPackage} data={packages} onSelect={handleSelectPackage}/>}
-        <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center", marginTop: `${px2rem(18)}`}}>
-          <Text>Fee:</Text>
-          <Text>{selectedPackage?.fee} USD</Text>
-        </div>
       </div>
       {
         isCustomPackage && (
@@ -261,6 +257,10 @@ const Form = (props: any) => {
           />
         )
       }
+      <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center"}}>
+        <Text>Fee:</Text>
+        <Text>{selectedPackage?.fee} USD</Text>
+      </div>
 
       <Button
         isLoading={isProcessing}
@@ -268,7 +268,7 @@ const Form = (props: any) => {
         type="submit"
         className="confirm-btn"
       >
-        {isProcessing ? "Processing..." : `Get ${selectedPackage?.id && selectedPackage?.id > 1 ? 'them' : 'it'} TC`}
+        {isProcessing ? "Processing..." : `Get ${selectedPackage?.id && selectedPackage?.id > 1 ? 'them' : 'it'} now`}
       </Button>
 
       <Text className="claimer">
