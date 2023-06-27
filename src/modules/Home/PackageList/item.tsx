@@ -38,6 +38,7 @@ const PackageItemStyled = styled.div`
   
   .package-header {
     display: flex;
+    align-items: center;
     gap: ${px2rem(8)};
   }
   
@@ -100,7 +101,7 @@ const PackageItem = (props: any) => {
         />
         <div>
           <div className={"package-title"}>{data.name}</div>
-          <div className={"package-title-short"}>{data.shortDescription}</div>
+          {/*<div className={"package-title-short"}>{data.shortDescription}</div>*/}
         </div>
       </div>
 
