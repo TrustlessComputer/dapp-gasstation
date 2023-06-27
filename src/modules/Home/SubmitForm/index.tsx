@@ -80,13 +80,9 @@ const Form = (props: any) => {
     setFieldValue('customPackage', custom);
 
     if(res?.length > 0) {
-      const silverPack = res[0];
-      const goldPack = res[1];
-      const diamondPack = res[2];
+      setPackages(res);
 
-      setPackages([silverPack, diamondPack, goldPack]);
-
-      setSelectedPackage(diamondPack);
+      setSelectedPackage(res[1]);
     }
   }
 
