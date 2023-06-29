@@ -41,6 +41,8 @@ export interface IPackage {
   title?: string;
   details?: ICoin[];
   fee: string;
+  feeBtc: string;
+  feeEth: string;
 }
 
 const Form = (props: any) => {
@@ -254,8 +256,8 @@ const Form = (props: any) => {
         )
       }
       <div style={{display: "flex", justifyContent: 'space-between', alignItems: "center"}}>
-        <Text>Fee:</Text>
-        <Text>{selectedPackage?.fee} USD</Text>
+        <Text>Network fees:</Text>
+        <Text>{payType?.value === 'eth' ? `${selectedPackage?.feeEth} ETH` : `${selectedPackage?.feeBtc} BTC`}</Text>
       </div>
 
       <Button
