@@ -1,70 +1,71 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {useAppDispatch, useAppSelector} from '@/state/hooks';
-import React, {useEffect} from 'react';
-import {BiCheck} from 'react-icons/bi';
+import React from 'react';
 import s from './styles.module.scss';
 import {selectApplication, updateCurrentChain} from "@/state/application/reducer";
 import storageLocal from "@/lib/storage.local";
 import {CHAIN_INFO} from "@/constants/storage-key";
-
-export const ItemChain = ({
-  _chain,
-  showName,
-  active,
-}: {
-  _chain: any;
-  showName?: boolean;
-  active?: boolean;
-}) => {
-  return (
-    <div className={s.itemChain}>
-      <div style={{alignItems: 'center', gap: '8px'}}>
-        <img src={_chain?.icon} />
-        <div>{showName ? _chain?.name : _chain?.chain}</div>
-      </div>
-      {active && <BiCheck color="#fff" style={{ fontSize: 20 }} />}
-    </div>
-  );
-};
+import {compareString} from "@/utils";
+import {L2_CHAIN_INFO, TRUSTLESS_COMPUTER_CHAIN_INFO} from "@/constants/chains";
 
 const HeaderSwitchNetwork = () => {
   const dispatch = useAppDispatch();
-  const currentChain = useAppSelector(selectApplication).currentChain;
+  const currentChain = useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
 
   const onChangeRouter = (_chainA?: any) => {
     dispatch(updateCurrentChain(_chainA));
     storageLocal.set(CHAIN_INFO, JSON.stringify(_chainA));
   };
 
-  useEffect(() => {
+  return (
+    <SwitchSymbol
+      chainA={L2_CHAIN_INFO}
+      chainB={TRUSTLESS_COMPUTER_CHAIN_INFO}
+      currentSelectedChain={currentChain}
+      onSelectChain={onChangeRouter}
+    />
+  );
+};
 
-  }, [currentChain]);
+export const SwitchSymbol = ({
+                               chainA,
+                               chainB,
+                               currentSelectedChain,
+                               onSelectChain,
+                             }: {
+  chainA: any;
+  chainB: any;
+  currentSelectedChain: any;
+  onSelectChain: (_1?: any, _2?: any) => void;
+}) => {
+  const selectPair = (_chainA?: any, _chainB?: any) => {
+    onSelectChain?.(_chainA, _chainB);
+  };
 
   return (
-    <div>dsfasdf</div>
+    <div className={s.switchContainer}>
+      <div
+        className={
+          compareString(currentSelectedChain.chain, chainA?.chain)
+            ? s.switchContainer__active
+            : ''
+        }
+        onClick={() => selectPair(chainA, chainB)}
+      >
+        <div>{chainA?.chain}</div>
+      </div>
+      <div
+        className={
+          compareString(currentSelectedChain.chain, chainB?.chain)
+            ? s.switchContainer__active
+            : ''
+        }
+        onClick={() => selectPair(chainB, chainA)}
+      >
+        <div>{chainB?.chain}</div>
+      </div>
+    </div>
   )
-
-  // return (
-  //   <Menu placement="bottom-end">
-  //     <MenuButton className={s.btnChainSelected}>
-  //       <Flex alignContent={'center'}>
-  //         <ItemChain _chain={currentChain} />
-  //         <BiChevronDown color="#FFFFFF" style={{ fontSize: 20 }} />
-  //       </Flex>
-  //     </MenuButton>
-  //     <MenuList className={s.chainList}>
-  //       {[TRUSTLESS_COMPUTER_CHAIN_INFO, L2_CHAIN_INFO].map((c) => (
-  //         <MenuItem onClick={() => onChangeRouter(c)} key={c.chainId}>
-  //           <ItemChain
-  //             _chain={c}
-  //             showName={true}
-  //             active={compareString(c.chainId, currentChain?.chainId)}
-  //           />
-  //         </MenuItem>
-  //       ))}
-  //     </MenuList>
-  //   </Menu>
-  // );
 };
 
 export default HeaderSwitchNetwork;
