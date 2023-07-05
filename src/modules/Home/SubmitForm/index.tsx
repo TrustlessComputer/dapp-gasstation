@@ -12,7 +12,7 @@ import px2rem from "@/utils/px2rem";
 import PaytypeList, {IPayType, ListPayType} from "../PaymentForm/PaytypeList";
 import {useAppSelector} from "@/state/hooks";
 import {selectApplication} from "@/state/application/reducer";
-import {L2_CHAIN_INFO} from "@/constants/chains";
+import {L2_CHAIN_INFO, TRUSTLESS_COMPUTER_CHAIN_INFO} from "@/constants/chains";
 
 interface IFormValue {
   amountTC: string;
@@ -65,7 +65,7 @@ const Form = (props: any) => {
   const [selectedPackage, setSelectedPackage] = useState<IPackage>();
   const [packages, setPackages] = useState<IPackage[]>([]);
   const [customPackage, setCustomPackage] = useState<IPackage>();
-  const currentChain = useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
+  const currentChain = useAppSelector(selectApplication).currentChain || TRUSTLESS_COMPUTER_CHAIN_INFO;
 
   // console.log('account', account);
   // console.log('packages', packages);
