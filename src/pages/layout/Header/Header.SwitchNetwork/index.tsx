@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {useAppDispatch, useAppSelector} from '@/state/hooks';
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {BiCheck} from 'react-icons/bi';
 import s from './styles.module.scss';
 import {selectApplication, updateCurrentChain} from "@/state/application/reducer";
@@ -18,7 +18,7 @@ export const ItemChain = ({
 }) => {
   return (
     <div className={s.itemChain}>
-      <div style={{alignItems: 'center'}} gap={2}>
+      <div style={{alignItems: 'center', gap: '8px'}}>
         <img src={_chain?.icon} />
         <div>{showName ? _chain?.name : _chain?.chain}</div>
       </div>
@@ -44,27 +44,27 @@ const HeaderSwitchNetwork = () => {
     <div>dsfasdf</div>
   )
 
-  return (
-    /*<Menu placement="bottom-end">
-      <MenuButton className={s.btnChainSelected}>
-        <Flex alignContent={'center'}>
-          <ItemChain _chain={currentChain} />
-          <BiChevronDown color="#FFFFFF" style={{ fontSize: 20 }} />
-        </Flex>
-      </MenuButton>
-      <MenuList className={s.chainList}>
-        {[TRUSTLESS_COMPUTER_CHAIN_INFO, L2_CHAIN_INFO].map((c) => (
-          <MenuItem onClick={() => onChangeRouter(c)} key={c.chainId}>
-            <ItemChain
-              _chain={c}
-              showName={true}
-              active={compareString(c.chainId, currentChain?.chainId)}
-            />
-          </MenuItem>
-        ))}
-      </MenuList>
-    </Menu>*/
-  );
+  // return (
+  //   <Menu placement="bottom-end">
+  //     <MenuButton className={s.btnChainSelected}>
+  //       <Flex alignContent={'center'}>
+  //         <ItemChain _chain={currentChain} />
+  //         <BiChevronDown color="#FFFFFF" style={{ fontSize: 20 }} />
+  //       </Flex>
+  //     </MenuButton>
+  //     <MenuList className={s.chainList}>
+  //       {[TRUSTLESS_COMPUTER_CHAIN_INFO, L2_CHAIN_INFO].map((c) => (
+  //         <MenuItem onClick={() => onChangeRouter(c)} key={c.chainId}>
+  //           <ItemChain
+  //             _chain={c}
+  //             showName={true}
+  //             active={compareString(c.chainId, currentChain?.chainId)}
+  //           />
+  //         </MenuItem>
+  //       ))}
+  //     </MenuList>
+  //   </Menu>
+  // );
 };
 
 export default HeaderSwitchNetwork;
