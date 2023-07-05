@@ -10,7 +10,7 @@ import {L2_CHAIN_INFO, TRUSTLESS_COMPUTER_CHAIN_INFO} from "@/constants/chains";
 
 const HeaderSwitchNetwork = () => {
   const dispatch = useAppDispatch();
-  const currentChain = useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
+  const currentChain = useAppSelector(selectApplication).currentChain || TRUSTLESS_COMPUTER_CHAIN_INFO;
 
   const onChangeRouter = (_chainA?: any) => {
     dispatch(updateCurrentChain(_chainA));

@@ -304,7 +304,7 @@ const Form = (props: any) => {
 
 const SubmitForm = (props: SubmitFormProps) => {
   const { isProcessing, onSubmitGenerate } = props;
-  const currentChain = useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
+  const currentChain = useAppSelector(selectApplication).currentChain || TRUSTLESS_COMPUTER_CHAIN_INFO;
 
   const isL2 = useMemo(() => {
     return compareString(currentChain?.chain, L2_CHAIN_INFO.chain);
