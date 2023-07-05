@@ -33,10 +33,10 @@ export const getHistoryBuyTC = async (
   }
 };
 
-export const getPackageList = async (
-) => {
+export const getPackageList = async (params: any) => {
+  const qs = '?' + queryString.stringify(params);
   try {
-    return swrFetcher(`${API_EXCHANGE_URL}/package/list`, {
+    return swrFetcher(`${API_EXCHANGE_URL}/package/list${qs}`, {
       method: 'GET',
       error: 'getPackageList',
     });

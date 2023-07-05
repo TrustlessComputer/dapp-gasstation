@@ -1,0 +1,23 @@
+.switchContainer {
+  border: 1px solid #4A5568;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  > div {
+    padding: 4px 10px;
+    cursor: pointer;
+    min-width: 50px;
+    text-align: center;
+    div {
+      color: #718096;
+      font-size: 12px;
+    }
+  }
+  &__active {
+    background-color: #F7FAFC;
+    div {
+      color: #000000 !important;
+      font-weight: 500;
+    }
+  }
+}

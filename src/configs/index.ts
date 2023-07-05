@@ -19,3 +19,7 @@ export const CDN_URL_ICONS: string = CDN_URL + "/gasstion-icons";
 export const ARTIFACT_CONTRACT: string = ENVS.VITE_ARTIFACT_CONTRACT;
 export const BNS_CONTRACT: string = ENVS.VITE_BNS_CONTRACT;
 export const BFS_ADDRESS: string = ENVS.VITE_BFS_CONTRACT;
+
+export const L2_NETWORK_RPC: string = process.env.VITE_PUBLIC_L2_RPC!;
+export const L2_EXPLORER: string = process.env.VITE_PUBLIC_L2_EXPLORER!;
+export const L2_CHAIN_ID: string = process.env.VITE_PUBLIC_L2_CHAIN_ID!;

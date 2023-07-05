@@ -1,8 +1,8 @@
 import Button from "@/components/Button";
 import { Input } from "@/components/Inputs";
-import {validateBTCAddressTaproot, validateWalletAddress} from "@/utils";
+import {compareString, validateBTCAddressTaproot, validateWalletAddress} from "@/utils";
 import { Formik } from "formik";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { FormContainer } from "./SubmitForm.styled";
 import Text from "@/components/Text";
 import { ceilPrecised } from "@/utils/format";
@@ -10,6 +10,9 @@ import PackageList from "@/modules/Home/PackageList";
 import {getPackageList} from "@/services/gas-station";
 import px2rem from "@/utils/px2rem";
 import PaytypeList, {IPayType, ListPayType} from "../PaymentForm/PaytypeList";
+import {useAppSelector} from "@/state/hooks";
+import {selectApplication} from "@/state/application/reducer";
+import {L2_CHAIN_INFO} from "@/constants/chains";
 
 interface IFormValue {
   amountTC: string;
@@ -62,6 +65,7 @@ const Form = (props: any) => {
   const [selectedPackage, setSelectedPackage] = useState<IPackage>();
   const [packages, setPackages] = useState<IPackage[]>([]);
   const [customPackage, setCustomPackage] = useState<IPackage>();
+  const currentChain = useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
 
   // console.log('account', account);
   // console.log('packages', packages);
@@ -72,10 +76,14 @@ const Form = (props: any) => {
 
   useEffect(() => {
     getListPackages();
-  }, []);
+  }, [currentChain?.chain]);
+
+  const isL2 = useMemo(() => {
+    return compareString(currentChain?.chain, L2_CHAIN_INFO.chain);
+  }, [currentChain?.chain]);
 
   const getListPackages = async () => {
-    const res = await getPackageList();
+    const res = await getPackageList({network: currentChain.chain});
 
     const custom = res?.pop();
     setCustomPackage(custom);
@@ -98,12 +106,24 @@ const Form = (props: any) => {
 
   useEffect(() => {
     if(selectedPackage) {
-      // @ts-ignore
-      setFieldValue('amountTC', selectedPackage?.details[0]?.amount || "0", true);
-      // @ts-ignore
-      setFieldValue('amountBTC', selectedPackage?.details[1]?.amount || "0", true);
-      // @ts-ignore
-      setFieldValue('amountWBTC', selectedPackage?.details[2]?.amount || "0", true);
+      console.log('selectedPackage', selectedPackage);
+      const TCDetail = selectedPackage?.details?.find(d => d.currency === 'TC');
+      if(TCDetail) {
+        // @ts-ignore
+        setFieldValue('amountTC', TCDetail?.amount || "0", true);
+      }
+
+      const BTCDetail = selectedPackage?.details?.find(d => d.currency === 'BTC');
+      if(BTCDetail) {
+        // @ts-ignore
+        setFieldValue('amountBTC', BTCDetail?.amount || "0", true);
+      }
+
+      const WBTCDetail = selectedPackage?.details?.find(d => d.currency === 'WBTC');
+      if(WBTCDetail) {
+        // @ts-ignore
+        setFieldValue('amountWBTC', WBTCDetail?.amount || "0", true);
+      }
 
       setFieldValue('selectedPackage', selectedPackage, true);
     }
@@ -183,7 +203,7 @@ const Form = (props: any) => {
               }
             />
             {
-              selectedPackage?.id && selectedPackage?.id > 1 && (
+              !isL2 && selectedPackage?.id && selectedPackage?.id > 1 && (
                 <Input
                   title={"How many BTC would you like to receive?"}
                   // id="amount"
@@ -201,7 +221,7 @@ const Form = (props: any) => {
               )
             }
             {
-              selectedPackage?.id && selectedPackage?.id > 2 && (
+              ((!isL2 && selectedPackage?.id && selectedPackage?.id > 2) || (isL2 && selectedPackage?.id && selectedPackage?.id > 5)) && (
                 <Input
                   title={"How many WBTC would you like to receive?"}
                   // id="amount"
@@ -237,7 +257,7 @@ const Form = (props: any) => {
         }
       />
       {
-        selectedPackage?.id && selectedPackage?.id > 1 && (
+        !isL2 && selectedPackage?.id && selectedPackage?.id > 1 && (
           <Input
             title="Receiving BTC Wallet Address"
             type="text"
@@ -284,6 +304,11 @@ const Form = (props: any) => {
 
 const SubmitForm = (props: SubmitFormProps) => {
   const { isProcessing, onSubmitGenerate } = props;
+  const currentChain = useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
+
+  const isL2 = useMemo(() => {
+    return compareString(currentChain?.chain, L2_CHAIN_INFO.chain);
+  }, [currentChain?.chain]);
 
   const validateForm = (values: IFormValue): Record<string, string> => {
     const errors: Record<string, string> = {};
@@ -296,7 +321,7 @@ const SubmitForm = (props: SubmitFormProps) => {
       errors.toAddress = "Invalid receiving TC wallet address.";
     }
 
-    if(values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
+    if(!isL2 && values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
       if (!values.toBTCAddress) {
         errors.toBTCAddress = "Receiving BTC wallet address is required.";
       } else if (!validateBTCAddressTaproot(values.toBTCAddress)) {
@@ -312,7 +337,7 @@ const SubmitForm = (props: SubmitFormProps) => {
           "The minimum amount is 0.01 TC. The maximum amount is 100 TC.";
       }
 
-      if(values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
+      if(!isL2 && values?.selectedPackage?.id && values?.selectedPackage?.id > 1) {
         if (!values.amountBTC) {
           errors.amountBTC = "Amount is required.";
         } else if (Number(values.amountBTC) < 0.001 || Number(values.amountBTC) > 1) {
@@ -321,7 +346,9 @@ const SubmitForm = (props: SubmitFormProps) => {
         }
       }
 
-      if(values?.selectedPackage?.id && values?.selectedPackage?.id > 2) {
+      if((!isL2 && values?.selectedPackage?.id && values?.selectedPackage?.id > 2)
+        || (isL2 && values?.selectedPackage?.id && values?.selectedPackage?.id > 5)
+      ) {
         if (!values.amountWBTC) {
           errors.amountWBTC = "Amount is required.";
         } else if (Number(values.amountWBTC) < 0.001 || Number(values.amountWBTC) > 1) {
