@@ -90,9 +90,9 @@ const Home = () => {
         },
         is_custom: isCustomPackage,
         custom_detail: {
-          TC: amountTC.toString(),
-          BTC: amountBTC.toString(),
-          WBTC: amountWBTC.toString(),
+          TC: amountTC.toString() || "0",
+          BTC: amountBTC.toString() || "0",
+          WBTC: amountWBTC.toString() || "0",
         }
       };
 

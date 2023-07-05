@@ -8,14 +8,14 @@
     cursor: pointer;
     min-width: 50px;
     text-align: center;
-    p {
+    div {
       color: #718096;
       font-size: 12px;
     }
   }
   &__active {
     background-color: #F7FAFC;
-    p {
+    div {
       color: #000000 !important;
       font-weight: 500;
     }
