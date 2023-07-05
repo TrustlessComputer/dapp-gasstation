@@ -5,6 +5,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { StyledTab, Wrapper } from "./Header.styled";
 import { CDN_URL_ICONS } from "@/configs";
+import HeaderSwitchNetwork from "@/pages/layout/Header/Header.SwitchNetwork";
 
 const Tabs = [
   {
@@ -49,6 +50,7 @@ const Header = () => {
         {renderTabs()}
       </Row>
       <div className="rightContainer">
+        <HeaderSwitchNetwork />
         <div className="external-link">
           <a href={"https://trustless.computer/"} target="_blank">
             TRUSTLESS
