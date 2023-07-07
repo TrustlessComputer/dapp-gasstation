@@ -50,7 +50,7 @@ const Header = () => {
         {renderTabs()}
       </Row>
       <div className="rightContainer">
-        <HeaderSwitchNetwork />
+        {/* <HeaderSwitchNetwork /> */}
         <div className="external-link">
           <a href={"https://trustless.computer/"} target="_blank">
             TRUSTLESS
