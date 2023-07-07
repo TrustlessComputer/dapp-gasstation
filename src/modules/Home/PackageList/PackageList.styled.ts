@@ -1,17 +1,12 @@
 import styled from "styled-components";
 import px2rem from "@/utils/px2rem";
 
-export const PackageListStyled = styled.div`
+export const PackageListStyled = styled.div<{ length: number }>`
   .package-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: ${px2rem(24)};
-    
-    > div {
-      flex: 1;
-      height: fit-content;
-    }
+    display: grid;
+    justify-items: center;
+    grid-gap: ${px2rem(24)};
+    grid-template-columns: ${({ length }) =>
+      `repeat(${length}, minmax(0, 1fr))`};
   }
 `;

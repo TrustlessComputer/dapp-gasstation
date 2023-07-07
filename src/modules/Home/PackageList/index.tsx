@@ -1,24 +1,24 @@
-import {PackageListStyled} from "@/modules/Home/PackageList/PackageList.styled";
-import React, {useEffect, useState} from "react";
+import { PackageListStyled } from "@/modules/Home/PackageList/PackageList.styled";
+import React, { useEffect, useState } from "react";
 import PackageItem from "@/modules/Home/PackageList/item";
-import {IPackage} from "@/modules/Home/SubmitForm";
+import { IPackage } from "@/modules/Home/SubmitForm";
 
 const PackageList = (props: any) => {
   const { data, onSelect, value } = props;
   const [selectedItem, setSelectedItem] = useState<IPackage>();
 
   useEffect(() => {
-    if(value) {
+    if (value) {
       setSelectedItem(value);
     }
   }, [value]);
 
   useEffect(() => {
     onSelect && onSelect(selectedItem);
-  }, [JSON.stringify(selectedItem)])
+  }, [JSON.stringify(selectedItem)]);
 
   return (
-    <PackageListStyled>
+    <PackageListStyled length={data && data.length ? data.length : 2}>
       {/*<Text
         style={{ textTransform: "uppercase" }}
         size="tini"
@@ -29,16 +29,19 @@ const PackageList = (props: any) => {
         Packages
       </Text>*/}
       <div className={"package-content"}>
-        {
-          data?.map((p: any) => {
-            return (
-              <PackageItem key={p.id} data={p} onClick={() => setSelectedItem(p)} isSelected={selectedItem?.id === p.id}/>
-            )
-          })
-        }
+        {data?.map((p: any) => {
+          return (
+            <PackageItem
+              key={p.id}
+              data={p}
+              onClick={() => setSelectedItem(p)}
+              isSelected={selectedItem?.id === p.id}
+            />
+          );
+        })}
       </div>
     </PackageListStyled>
-  )
-}
+  );
+};
 
 export default PackageList;

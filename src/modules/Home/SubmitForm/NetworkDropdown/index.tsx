@@ -1,7 +1,7 @@
 import Dropdown, { IDropdownRef } from "@/components/Popover";
 import Text from "@/components/Text";
 import { CDN_URL } from "@/configs";
-import React from "react";
+import React, { useEffect } from "react";
 import { DropdownItem, DropdownList, Element } from "./styled";
 import {
   L2_CHAIN_INFO,
@@ -24,8 +24,7 @@ const NetworkDropdown = React.memo(() => {
 
   const dispatch = useAppDispatch();
   const currentChain =
-    useAppSelector(selectApplication).currentChain ||
-    TRUSTLESS_COMPUTER_CHAIN_INFO;
+    useAppSelector(selectApplication).currentChain || L2_CHAIN_INFO;
 
   const onChangeRouter = (_chainA?: any) => {
     dispatch(updateCurrentChain(_chainA));
