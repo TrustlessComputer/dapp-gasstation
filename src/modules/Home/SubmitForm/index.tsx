@@ -107,6 +107,10 @@ const Form = (props: any) => {
   useEffect(() => {
     if(selectedPackage) {
       console.log('selectedPackage', selectedPackage);
+      setFieldValue('amountTC', "0", true);
+      setFieldValue('amountBTC', "0", true);
+      setFieldValue('amountWBTC', "0", true);
+
       const TCDetail = selectedPackage?.details?.find(d => d.currency === 'TC');
       if(TCDetail) {
         // @ts-ignore
